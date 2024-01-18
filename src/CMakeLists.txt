@@ -15,6 +15,8 @@ target_include_directories(svs BEFORE PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
 
 
 install(FILES structures.hpp	
+							param_setting.hpp
+							fisheye_camera.hpp
 							imagebuffer.hpp
 							base_thread.hpp 
 							capture_thread.hpp

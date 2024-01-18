@@ -4,6 +4,8 @@
 #include <mutex>
 #include <string>
 #include <memory>
+#include <iostream>
+#include <stdexcept>
 #include <opencv2/opencv.hpp>
 #include "structures.hpp"
 #include "base_thread.hpp"
@@ -27,8 +29,8 @@ std::string flipMethodToString(FlipMethod _flipmethod) {
 
 class CaptureThread : public BaseThread {
   public:
-  CaptureThread(std::shared_ptr<MultiBufferManager<Buffer<ImageFrame>, CaptureThread>> _sptr_buffer_manager, int _device_id, FlipMethod _flip_method, bool _drop_if_full, int _api_preference, int _width, int _height, bool _use_gst) 
-    : sptr_buffer_manager_(_sptr_buffer_manager), device_id_(_device_id), flip_method_(_flip_method), drop_if_full_(_drop_if_full), api_preference_(_api_preference), width_(_width), height_(_height), use_gst_(_use_gst) {}
+  CaptureThread(std::shared_ptr<MultiBufferManager<Buffer<ImageFrame>, CaptureThread>> _sptr_buffer_manager, int _device_id, FlipMethod _flip_method, bool _drop_if_full, int _api_preference, cv::Size _resolution, bool _use_gst) 
+    : sptr_buffer_manager_(_sptr_buffer_manager), device_id_(_device_id), flip_method_(_flip_method), drop_if_full_(_drop_if_full), api_preference_(_api_preference), resolution_(_resolution), use_gst_(_use_gst) {}
   bool connect_camera() {
     if (use_gst_) {
       cv::String options = gstreamer_pipeline(device_id_, 960, 640, 60, flip_method_);
@@ -37,13 +39,13 @@ class CaptureThread : public BaseThread {
       cap_.open(device_id_);
     }
     if (cap_.isOpened()) {
-      if (width_<=0 || height_<=0) {
-        width_ = int(cap_.get(cv::CAP_PROP_FRAME_WIDTH));
-        height_ = int(cap_.get(cv::CAP_PROP_FRAME_HEIGHT));
+      if (resolution_.width<=0 || resolution_.height<=0) {
+        resolution_.width = int(cap_.get(cv::CAP_PROP_FRAME_WIDTH));
+        resolution_.height = int(cap_.get(cv::CAP_PROP_FRAME_HEIGHT));
         cap_.set(cv::CAP_PROP_FOURCC, cv::VideoWriter::fourcc('M', 'J', 'P', 'G'));
       } else {
-        cap_.set(cv::CAP_PROP_FRAME_WIDTH, width_);
-        cap_.set(cv::CAP_PROP_FRAME_HEIGHT, height_);
+        cap_.set(cv::CAP_PROP_FRAME_WIDTH, resolution_.width);
+        cap_.set(cv::CAP_PROP_FRAME_HEIGHT, resolution_.height);
         cap_.set(cv::CAP_PROP_FOURCC, cv::VideoWriter::fourcc('M', 'J', 'P', 'G'));
       }
     } else {
@@ -65,7 +67,7 @@ class CaptureThread : public BaseThread {
   protected:
   void run() {
     if (sptr_buffer_manager_ == std::shared_ptr<MultiBufferManager<Buffer<ImageFrame>, CaptureThread>>(nullptr)){
-      std::cerr<<"This thread has not been binded to any buffer manager yet"<<std::endl;
+      throw std::runtime_error("This thread has not been binded to any buffer manager yet");
     }
     while (true) {
       {
@@ -103,8 +105,7 @@ class CaptureThread : public BaseThread {
   FlipMethod flip_method_;
   bool drop_if_full_;
   int api_preference_;
-  int width_;
-  int height_;
+  cv::Size resolution_;
   bool use_gst_;
   cv::VideoCapture cap_ = cv::VideoCapture();
   std::shared_ptr<MultiBufferManager<Buffer<ImageFrame>, CaptureThread>> sptr_buffer_manager_ = std::shared_ptr<MultiBufferManager<Buffer<ImageFrame>, CaptureThread>>(nullptr);

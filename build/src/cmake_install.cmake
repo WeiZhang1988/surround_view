@@ -39,7 +39,7 @@ endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-   "/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/structures.hpp;/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/imagebuffer.hpp;/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/base_thread.hpp;/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/capture_thread.hpp")
+   "/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/structures.hpp;/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/param_setting.hpp;/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/fisheye_camera.hpp;/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/imagebuffer.hpp;/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/base_thread.hpp;/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/capture_thread.hpp")
   if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
@@ -48,6 +48,8 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
   endif()
 file(INSTALL DESTINATION "/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include" TYPE FILE FILES
     "/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/src/structures.hpp"
+    "/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/src/param_setting.hpp"
+    "/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/src/fisheye_camera.hpp"
     "/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/src/imagebuffer.hpp"
     "/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/src/base_thread.hpp"
     "/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/src/capture_thread.hpp"
