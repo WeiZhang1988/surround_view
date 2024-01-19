@@ -12,6 +12,7 @@
 #include <string>
 #include <memory>
 #include <opencv2/opencv.hpp>
+#include "param_setting.hpp"
 
 namespace SVS{
 template <std::ptrdiff_t least_max_value = std::numeric_limits<std::ptrdiff_t>::max()>
@@ -76,36 +77,37 @@ using binary_semaphore = counting_semaphore<1>;
 template<typename StoredDataType>
 class Buffer {
   public:
+  using DataType = StoredDataType;
   Buffer(int _buffer_size = 5) : buffer_size_(_buffer_size) {
     free_slots_ = counting_semaphore<>{buffer_size_};
     used_slots_ = counting_semaphore<>{0};
     clear_buffer_add_ = counting_semaphore<>{1};
     clear_buffer_get_ = counting_semaphore<>{1};
   }
-  void add(std::shared_ptr<StoredDataType> _sptr_data, bool _drop_if_full = false) {
+  void add(StoredDataType _data, bool _drop_if_full = false) {
     clear_buffer_add_.acquire();
     if (_drop_if_full) {
       if (free_slots_.try_acquire()) {
         {
           std::unique_lock<decltype(queue_mutex_)> lock{queue_mutex_};
-          queue_.push(_sptr_data);
+          queue_.push(_data);
         }
         used_slots_.release();
       } else {
         free_slots_.acquire();
         {
           std::unique_lock<decltype(queue_mutex_)> lock{queue_mutex_};
-          queue_.push(_sptr_data);
+          queue_.push(_data);
         }
         used_slots_.release();
       }
     }
     clear_buffer_add_.release();
   }
-  std::shared_ptr<StoredDataType> get() {
+  StoredDataType get() {
     clear_buffer_get_.acquire();
     used_slots_.acquire();
-    std::shared_ptr<StoredDataType> sptr_data;
+    StoredDataType _data;
     {
       std::unique_lock<decltype(queue_mutex_)> lock{queue_mutex_};
       sptr_data = queue_.front();
@@ -159,7 +161,7 @@ class Buffer {
 };
 
 template<typename BufferType, typename ThreadType>
-class MultiBufferManager {
+class MultiBufferManager : public std::enable_shared_from_this<MultiBufferManager<BufferType,ThreadType>>{
   public:
   MultiBufferManager(bool _do_sync = true) : do_sync_(_do_sync) {}
   void create_buffer_for_device(int _device_id, int _buffer_size, bool _sync=true) {
@@ -167,11 +169,11 @@ class MultiBufferManager {
       std::unique_lock<decltype(mutex_)> lock{mutex_};
       sync_devices_.insert(_device_id);
     }
-    buffer_maps_[_device_id] = BufferType(_buffer_size);
+    buffer_maps_[_device_id] = std::make_shared<BufferType>(_buffer_size);
   }
   void bind_thread(std::shared_ptr<ThreadType> _sptr_thread, int _buffer_size, bool _sync=true) {
     create_buffer_for_device(_sptr_thread->device_id, _buffer_size, _sync);
-    _sptr_thread.buffer_manager = this;
+    _sptr_thread.buffer_manager = this->shared_from_this();
   }
   std::shared_ptr<BufferType> get_device(int _device_id) {
     return buffer_maps_[_device_id];
@@ -234,6 +236,70 @@ class MultiBufferManager {
   std::mutex mutex_;
   std::map<int, std::shared_ptr<BufferType>> buffer_maps_;
   int arrived_ = 0;
+};
+
+template<typename BufferType, typename ThreadType>
+class ProjectedImageBufferManager : public std::enable_shared_from_this<ProjectedImageBufferManager<BufferType,ThreadType>>{
+  public:
+  ProjectedImageBufferManager(bool _drop_if_full = true, int _buffer_size = 8) : drop_if_full_(_drop_if_full) {
+    sptr_buffer_ = std::make_shared<BufferType>(_buffer_size);
+  }
+  void bind_thread(std::shared_ptr<ThreadType> _sptr_thread) {
+    {
+      std::unique_lock<std::mutex> lock{mutex_};
+      sync_devices_.insert(_sptr_thread->device_id_);
+    }
+    std::string name = _sptr_thread->camera_model_.camera_name_;
+    cv::Size shape = static_const_settings.project_shapes[name];
+    current_images_[_sptr_thread->device_id] = cv::Mat::zeros(shape.height,shape.width,3);
+    _sptr_thread->proc_buffer_manager_ = this->shared_from_this();
+  }
+  std::shared_ptr<typename BufferType::DataType> get () {
+    return sptr_buffer_->get();
+  }
+  void set_image_for_device(int _device_id, std::shared_ptr<cv::Mat> _sptr_image) {
+    if (sync_devices_.find(_device_id) != sync_devices_.end()) {
+      current_images_[_device_id] = _sptr_image;
+    } else {
+      throw std::runtime_error("Device not held by the buffer: " + std::to_string(_device_id));
+    }
+  }
+  void sync(int _device_id) {
+    std::unique_lock<std::mutex> lock{mutex_};
+    if (sync_devices_.find(_device_id) != sync_devices_.end()) {
+      arrived_ += 1;
+      if (arrived_ == sync_devices_.size()) {
+        sptr_buffer_->add(current_images_, drop_if_full_);
+        cv_.notify_all();
+      } else {
+        cv_.wait(mutex_);
+      }
+      arrived_ -= 1;
+    }
+  }
+  void wake_all() {
+    std::unique_lock<std::mutex> lock{mutex_};
+    cv_.notify_all();
+  }
+  bool contains(int _device_id) {
+    return sync_devices_.find(_device_id) != sync_devices_.end();
+  }
+  std::string str() {
+    std::string devices;
+    for (const int &item : sync_devices_) {
+      devices += (", " + std::to_string(item));
+    }
+    return std::string(typeid(ProjectedImageBufferManager<BufferType, ThreadType>).name()) + ":\n" + \
+           "devices: " + devices + "\n";
+  }
+  protected:
+  bool drop_if_full_;
+  std::shared_ptr<BufferType> sptr_buffer_ = std::shared_ptr<BufferType>(nullptr);
+  std::unordered_set<int> sync_devices_;
+  std::condition_variable cv_;
+  std::mutex mutex_;
+  int arrived_ = 0;
+  std::map<int, cv::Mat> current_images_;
 };
 } //namespace SVS
 
