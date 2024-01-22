@@ -68,6 +68,7 @@
     "codecvt": "cpp",
     "future": "cpp",
     "*.ipp": "cpp",
-    "queue": "cpp"
+    "queue": "cpp",
+    "*.inc": "cpp"
   }
 }

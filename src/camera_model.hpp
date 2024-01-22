@@ -15,14 +15,14 @@ class CameraModel : public std::enable_shared_from_this<CameraModel> {
     if ( access( _camera_param_file.c_str(), F_OK ) != -1 ) {
       throw std::runtime_error("Cannot find camera param file");
     }
-    if (static_const_settings.camera_names.find(_camera_name) == static_const_settings.camera_names.end()) {
+    if (static_settings.camera_names.find(_camera_name) == static_settings.camera_names.end()) {
       throw std::runtime_error("Unknown camera name: " + _camera_name);
     }
     camera_param_file_ = _camera_param_file;
     camera_name_ = _camera_name;
     scale_xy_ = cv::Mat{1.0,1.0};
     shift_xy_ = cv::Mat{0,0};
-    project_shape_ = static_const_settings.project_shapes[camera_name_];
+    project_shape_ = static_settings.project_shapes[camera_name_];
     load_camera_params();
   }
   void load_camera_params() {

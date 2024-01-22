@@ -36,7 +36,7 @@ class Settings{
     {"right",{{shift_h + 160, shift_w},{shift_h + 720, shift_w},{shift_h + 160, shift_w + 160},{shift_h + 720, shift_w + 160}}}};
   cv::Mat car_image = cv::imread(".data/images/car.png", cv::IMREAD_COLOR);
 };
-static Settings static_const_settings = Settings();
+static Settings static_settings = Settings();
 } //namespace SVS
 
 #endif //SVS_PARAM_SETTING_HPP

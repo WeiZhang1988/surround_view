@@ -16,10 +16,13 @@ target_include_directories(svs BEFORE PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
 
 install(FILES structures.hpp	
 							param_setting.hpp
-							fisheye_camera.hpp
+							semaphore.hpp
+							camera_model.hpp
 							imagebuffer.hpp
 							base_thread.hpp 
 							capture_thread.hpp
+							process_thread.hpp
+							bird_view.hpp
 							DESTINATION ${PROJECT_SOURCE_DIR}/include)
 							
 install(TARGETS svs LIBRARY DESTINATION ${PROJECT_SOURCE_DIR}/lib)

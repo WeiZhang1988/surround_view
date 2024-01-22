@@ -6,6 +6,7 @@
 namespace SVS{
 class ImageFrame{
   public:
+  ImageFrame() {}
   ImageFrame(double _timestamp, cv::Mat _image) : timestamp_(_timestamp) {
     image_ = _image.clone();
   }

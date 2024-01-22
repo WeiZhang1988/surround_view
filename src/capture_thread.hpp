@@ -29,8 +29,8 @@ std::string flipMethodToString(FlipMethod _flipmethod) {
 
 class CaptureThread : public BaseThread {
   public:
-  CaptureThread(std::shared_ptr<MultiBufferManager<Buffer<ImageFrame>, CaptureThread>> _sptr_buffer_manager, int _device_id, FlipMethod _flip_method, bool _drop_if_full, int _api_preference, cv::Size _resolution, bool _use_gst) 
-    : sptr_buffer_manager_(_sptr_buffer_manager), device_id_(_device_id), flip_method_(_flip_method), drop_if_full_(_drop_if_full), api_preference_(_api_preference), resolution_(_resolution), use_gst_(_use_gst) {}
+  CaptureThread(int _device_id, FlipMethod _flip_method, bool _drop_if_full, int _api_preference, cv::Size _resolution, bool _use_gst) 
+    : device_id_(_device_id), flip_method_(_flip_method), drop_if_full_(_drop_if_full), api_preference_(_api_preference), resolution_(_resolution), use_gst_(_use_gst) {}
   bool connect_camera() {
     if (use_gst_) {
       cv::String options = gstreamer_pipeline(device_id_, 960, 640, 60, flip_method_);
@@ -64,9 +64,8 @@ class CaptureThread : public BaseThread {
   bool is_camera_connected() {
     return cap_.isOpened();
   }
-  protected:
   void run() {
-    if (sptr_buffer_manager_ == std::shared_ptr<MultiBufferManager<Buffer<ImageFrame>, CaptureThread>>(nullptr)){
+    if (sptr_buffer_manager_ == std::shared_ptr<MultiBufferManager>(nullptr)){
       throw std::runtime_error("This thread has not been binded to any buffer manager yet");
     }
     while (true) {
@@ -83,14 +82,15 @@ class CaptureThread : public BaseThread {
       if (cap_.grab()) {
         cv::Mat frame;
         bool ret = cap_.retrieve(frame);
-        std::shared_ptr<ImageFrame> sptr_img_frame = std::make_shared<ImageFrame>(clock_.msecsSinceStartOfLinux(), frame);
-        sptr_buffer_manager_->get_device(device_id_)->add(sptr_img_frame, drop_if_full_);
+        ImageFrame img_frame = ImageFrame(clock_.msecsSinceStartOfLinux(), frame);
+        sptr_buffer_manager_->add(device_id_,img_frame, drop_if_full_);
         update_fps(processing_time_);
         stat_data_.frames_processed_count_ += 1;
         //update_statistics_gui_.emit(stat_data_);
       }
     }
   }
+  protected:
   cv::String gstreamer_pipeline(int _cam_id = 0, int _capture_width = 960, int _capture_height = 640, int _framerate = 60, FlipMethod _flip_method = FlipMethod::Rotation180) {
     return "nvarguscamerasrc sensor-id=" + std::to_string(_cam_id) + " ! " + \
            "video/x-raw(memory:NVMM), " + \
@@ -108,7 +108,7 @@ class CaptureThread : public BaseThread {
   cv::Size resolution_;
   bool use_gst_;
   cv::VideoCapture cap_ = cv::VideoCapture();
-  std::shared_ptr<MultiBufferManager<Buffer<ImageFrame>, CaptureThread>> sptr_buffer_manager_ = std::shared_ptr<MultiBufferManager<Buffer<ImageFrame>, CaptureThread>>(nullptr);
+  std::shared_ptr<MultiBufferManager> sptr_buffer_manager_ = std::shared_ptr<MultiBufferManager>(nullptr);
 };
 
 } //namespace SVS

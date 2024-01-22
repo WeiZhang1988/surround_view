@@ -5,6 +5,7 @@
 #include "base_thread.hpp"
 #include "capture_thread.hpp"
 #include "process_thread.hpp"
+#include "birdview.hpp"
 
 namespace SVS{
 
