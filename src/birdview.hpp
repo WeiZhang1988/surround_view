@@ -58,11 +58,8 @@ class BirdView : public BaseThread, std::enable_shared_from_this<BirdView> {
   cv::Mat get() {
     return sptr_buffer_->get().clone();
   }
-  void update_frames(cv::Mat _front_image, cv::Mat _back_image,cv::Mat _left_image,cv::Mat _right_image) {
-    front_image_ = _front_image.clone();
-    back_image_  = _back_image.clone();
-    left_image_  = _left_image.clone();
-    right_image_ = _right_image.clone();
+  void update_frames(std::vector<cv::Mat> _vec_images) {
+    vec_images_ = _vec_images;
   }
   void load_weights_and_masks(std::string _weights_image, std::string _masks_iamge) {
     cv::Mat GMat = cv::imread(_weights_image, cv::IMREAD_UNCHANGED);
@@ -87,14 +84,18 @@ class BirdView : public BaseThread, std::enable_shared_from_this<BirdView> {
     return (_imA * vec_weights[k] + _imB * (1 - vec_weights[k])).clone();
   }
   void stich_all_parts() {
-    F_ = FM(front_.clone());
-    B_ = BM(back_.clone());
-    L_ = LM(left_.clone());
-    R_ = RM(right_.clone());
-    FL_ = merge(FI(front_.clone()), LI(left_.clone()), 0);
-    FR_ = merge(FII(front_.clone()), RII(right_.clone()), 1);
-    BL_ = merge(BIII(back_.clone()), LIII(left_.clone()), 2);
-    BR_ = merge(BIV(back_.clone()), RIV(right_.clone()), 3);
+    cv::Mat front = vec_images[0].clone();
+    cv::Mat back  = vec_images[1].clone();
+    cv::Mat left  = vec_images[2].clone();
+    cv::Mat right = vec_images[3].clone();
+    F_ = FM(front_);
+    B_ = BM(back_);
+    L_ = LM(left_);
+    R_ = RM(right_);
+    FL_ = merge(FI(front), LI(left), 0);
+    FR_ = merge(FII(front), RII(right), 1);
+    BL_ = merge(BIII(back), LIII(left), 2);
+    BR_ = merge(BIV(back), RIV(right), 3);
   }
   void copy_car_image() {
     C_ = car_image_.clone();
@@ -107,7 +108,7 @@ class BirdView : public BaseThread, std::enable_shared_from_this<BirdView> {
     }
   }
   std::shared_ptr<BirdView> make_luminance_balance() {
-    
+    //stop here
     return this->shared_from_this();
   }
   protected:
@@ -143,8 +144,7 @@ class BirdView : public BaseThread, std::enable_shared_from_this<BirdView> {
   std::shared_ptr<ProjectedImageBufferManager> sptr_proc_buffer_manager_ = std::shared_ptr<ProjectedImageBufferManager>(nullptr);
   cv::Mat car_image_ = static_settings.car_image.clone();
   cv::Mat image_ = cv::Mat::zeros(static_settings.total_h, static_settings.total_w);
-  cv::Mat front_image_, back_image_, left_image_, right_image_;
-  std::vector<cv::Mat> vec_weights_, vec_masks_;
+  std::vector<cv::Mat> vec_images_, vec_weights_, vec_masks_;
   cv::Mat F_, B_, L_, R_, FL_, FR_, BL_, BR_, C_;
 };
 } //namespace SVS
