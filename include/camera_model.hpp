@@ -31,7 +31,7 @@ class CameraModel : public std::enable_shared_from_this<CameraModel> {
     fs["dist_coeffs"]>>dist_coeffs_;
     cv::Mat tmp;
     fs["resolution"]>>tmp;
-    resolution_ = cv::Size(tmp.at<double>(0),tmp.at<double>(1));
+    resolution_ = cv::Size(tmp.at<int>(0),tmp.at<int>(1));
     fs["scale_xy"]>>scale_xy_;
     fs["shift_xy"]>>shift_xy_;
     fs["project_matrix"]>>project_matrix_;
