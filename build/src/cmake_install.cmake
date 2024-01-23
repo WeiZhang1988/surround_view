@@ -39,7 +39,7 @@ endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-   "/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/structures.hpp;/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/utils.hpp;/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/param_setting.hpp;/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/semaphore.hpp;/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/camera_model.hpp;/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/imagebuffer.hpp;/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/base_thread.hpp;/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/capture_thread.hpp;/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/process_thread.hpp;/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/bird_view.hpp")
+   "/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/structures.hpp;/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/utils.hpp;/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/param_setting.hpp;/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/semaphore.hpp;/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/camera_model.hpp;/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/imagebuffer.hpp;/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/base_thread.hpp;/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/capture_thread.hpp;/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/process_thread.hpp;/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/bird_view.hpp;/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/simple_gui.hpp")
   if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
@@ -57,6 +57,7 @@ file(INSTALL DESTINATION "/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/
     "/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/src/capture_thread.hpp"
     "/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/src/process_thread.hpp"
     "/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/src/bird_view.hpp"
+    "/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/src/simple_gui.hpp"
     )
 endif()
 

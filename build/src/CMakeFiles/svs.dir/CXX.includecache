@@ -146,6 +146,20 @@ limits
 mutex
 -
 
+/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/src/simple_gui.hpp
+iostream
+-
+string
+-
+vector
+-
+functional
+-
+opencv2/opencv.hpp
+-
+utils.hpp
+/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/src/utils.hpp
+
 /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/src/structures.hpp
 opencv2/opencv.hpp
 -
@@ -169,6 +183,8 @@ process_thread.hpp
 /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/src/process_thread.hpp
 birdview.hpp
 /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/src/birdview.hpp
+simple_gui.hpp
+/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/src/simple_gui.hpp
 
 /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/src/utils.hpp
 stdexcept

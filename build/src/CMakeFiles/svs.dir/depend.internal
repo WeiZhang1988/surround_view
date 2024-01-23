@@ -10,6 +10,7 @@ src/CMakeFiles/svs.dir/test.cpp.o
  /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/src/param_setting.hpp
  /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/src/process_thread.hpp
  /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/src/semaphore.hpp
+ /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/src/simple_gui.hpp
  /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/src/structures.hpp
  /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/src/test.cpp
  /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/src/utils.hpp

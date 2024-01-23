@@ -9,6 +9,7 @@ src/CMakeFiles/svs.dir/test.cpp.o: ../src/imagebuffer.hpp
 src/CMakeFiles/svs.dir/test.cpp.o: ../src/param_setting.hpp
 src/CMakeFiles/svs.dir/test.cpp.o: ../src/process_thread.hpp
 src/CMakeFiles/svs.dir/test.cpp.o: ../src/semaphore.hpp
+src/CMakeFiles/svs.dir/test.cpp.o: ../src/simple_gui.hpp
 src/CMakeFiles/svs.dir/test.cpp.o: ../src/structures.hpp
 src/CMakeFiles/svs.dir/test.cpp.o: ../src/test.cpp
 src/CMakeFiles/svs.dir/test.cpp.o: ../src/utils.hpp

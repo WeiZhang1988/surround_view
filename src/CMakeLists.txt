@@ -24,6 +24,7 @@ install(FILES structures.hpp
 							capture_thread.hpp
 							process_thread.hpp
 							bird_view.hpp
+							simple_gui.hpp
 							DESTINATION ${PROJECT_SOURCE_DIR}/include)
 							
 install(TARGETS svs LIBRARY DESTINATION ${PROJECT_SOURCE_DIR}/lib)

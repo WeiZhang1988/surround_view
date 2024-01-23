@@ -7,6 +7,7 @@
 #include "capture_thread.hpp"
 #include "process_thread.hpp"
 #include "birdview.hpp"
+#include "simple_gui.hpp"
 
 namespace SVS{
 
