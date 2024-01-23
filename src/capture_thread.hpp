@@ -43,6 +43,9 @@ class CaptureThread : public BaseThread {
         resolution_.width = int(cap_.get(cv::CAP_PROP_FRAME_WIDTH));
         resolution_.height = int(cap_.get(cv::CAP_PROP_FRAME_HEIGHT));
         cap_.set(cv::CAP_PROP_FOURCC, cv::VideoWriter::fourcc('M', 'J', 'P', 'G'));
+        if (!cap_.isOpened()) {
+          return false;
+        }
       } else {
         cap_.set(cv::CAP_PROP_FRAME_WIDTH, resolution_.width);
         cap_.set(cv::CAP_PROP_FRAME_HEIGHT, resolution_.height);
@@ -52,6 +55,7 @@ class CaptureThread : public BaseThread {
       std::cerr<<"Cannot open camera "<<std::to_string(device_id_)<<std::endl;
       return false;
     }
+    return true;
   } 
   bool disconnect_camera() {
     if (cap_.isOpened()) {

@@ -67,31 +67,31 @@ class BirdView : public BaseThread, std::enable_shared_from_this<BirdView> {
     GMat = GMat / 255.0;
     cv::Mat result;
     vec_weights_.clear();
+    std::vector<cv::Mat> channels(3);
+    cv::split(GMat, channels);
     for (int k=0; k<4; k++) {
-      std::vector<cv::Mat> vec{GMat(cv::Range::all(),cv::Range::all(),k),GMat(cv::Range::all(),cv::Range::all(),k),GMat(cv::Range::all(),cv::Range::all(),k)};
+      std::vector<cv::Mat> vec{channels[k],channels[k],channels[k]};
       cv::merge(vec,result);
-      vec_weights_.push(result.clone());
+      vec_weights_.push_back(result.clone());
     }
     cv::Mat Mmat = cv::imread(_masks_iamge, cv::IMREAD_UNCHANGED);
     cv::cvtColor(GMat, GMat, cv::COLOR_BGRA2RGBA);
     Mmat = convert_binary_to_bool(Mmat);
     vec_masks_.clear();
-    for (int k=0; k<4; k++) {
-      vec_masks_.push(MMat(cv::Range::all(),cv::Range::all(),k).clone());
-    }
+    cv::split(Mmat, vec_masks_);
   }
   cv::Mat merge(cv::Mat _imA, cv::Mat _imB, int k) {
-    return (_imA * vec_weights[k] + _imB * (1 - vec_weights[k])).clone();
+    return (_imA * vec_weights_[k] + _imB * (1 - vec_weights_[k]));
   }
   void stich_all_parts() {
-    cv::Mat front = vec_images[0].clone();
-    cv::Mat back  = vec_images[1].clone();
-    cv::Mat left  = vec_images[2].clone();
-    cv::Mat right = vec_images[3].clone();
-    F_ = FM(front_);
-    B_ = BM(back_);
-    L_ = LM(left_);
-    R_ = RM(right_);
+    cv::Mat front = vec_images_[0].clone();
+    cv::Mat back  = vec_images_[1].clone();
+    cv::Mat left  = vec_images_[2].clone();
+    cv::Mat right = vec_images_[3].clone();
+    F_ = FM(front);
+    B_ = BM(back);
+    L_ = LM(left);
+    R_ = RM(right);
     FL_ = merge(FI(front), LI(left), 0);
     FR_ = merge(FII(front), RII(right), 1);
     BL_ = merge(BIII(back), LIII(left), 2);
@@ -100,16 +100,121 @@ class BirdView : public BaseThread, std::enable_shared_from_this<BirdView> {
   void copy_car_image() {
     C_ = car_image_.clone();
   }
-  double tune(double _x) {
-    if (_x > 1.0) {
-      return x * std::exp(1.0 - x, 0.5);
+  cv::Scalar tune(cv::Scalar _x) {
+    cv::Scalar tmp;
+    if (_x[0] > 1.0) {
+      cv::exp((cv::Scalar(1.0) - _x) * cv::Scalar(0.5),tmp);
+      return _x * tmp;
     } else {
-      return x * std::exp(1.0 - x, 0.8);
+      cv::exp((cv::Scalar(1.0) - _x) * cv::Scalar(0.8),tmp);
+      return _x * tmp;
     }
   }
   std::shared_ptr<BirdView> make_luminance_balance() {
-    //stop here
+    cv::Mat front = vec_images_[0].clone();
+    cv::Mat back  = vec_images_[1].clone();
+    cv::Mat left  = vec_images_[2].clone();
+    cv::Mat right = vec_images_[3].clone();
+    cv::Mat m1 = vec_masks_[0].clone();
+    cv::Mat m2 = vec_masks_[1].clone();
+    cv::Mat m3 = vec_masks_[2].clone();
+    cv::Mat m4 = vec_masks_[3].clone();
+    std::vector<cv::Mat> Fv, Bv, Lv, Rv;
+    cv::split(front,Fv); 
+    cv::Mat Fb = Fv[0].clone();
+    cv::Mat Fg = Fv[1].clone();
+    cv::Mat Fr = Fv[2].clone();
+    cv::split(back,Bv);
+    cv::Mat Bb = Bv[0].clone();
+    cv::Mat Bg = Bv[1].clone();
+    cv::Mat Br = Bv[2].clone();
+    cv::split(left,Lv);
+    cv::Mat Lb = Lv[0].clone();
+    cv::Mat Lg = Lv[1].clone();
+    cv::Mat Lr = Lv[2].clone();
+    cv::split(right,Rv);
+    cv::Mat Rb = Rv[0].clone();
+    cv::Mat Rg = Rv[1].clone();
+    cv::Mat Rr = Rv[2].clone();
+    cv::Scalar a1 = mean_luminance_ratio(RII(Rb), FII(Fb), m2);
+    cv::Scalar a2 = mean_luminance_ratio(RII(Rg), FII(Fg), m2);
+    cv::Scalar a3 = mean_luminance_ratio(RII(Rr), FII(Fr), m2);
+    cv::Scalar b1 = mean_luminance_ratio(BIV(Bb), RIV(Rb), m4);
+    cv::Scalar b2 = mean_luminance_ratio(BIV(Bg), RIV(Rg), m4);
+    cv::Scalar b3 = mean_luminance_ratio(BIV(Br), RIV(Rr), m4);
+    cv::Scalar c1 = mean_luminance_ratio(LIII(Lb), BIII(Bb), m3);
+    cv::Scalar c2 = mean_luminance_ratio(LIII(Lg), BIII(Bg), m3);
+    cv::Scalar c3 = mean_luminance_ratio(LIII(Lr), BIII(Br), m3);
+    cv::Scalar d1 = mean_luminance_ratio(FI(Fb), LI(Lb), m1);
+    cv::Scalar d2 = mean_luminance_ratio(FI(Fg), LI(Lg), m1);
+    cv::Scalar d3 = mean_luminance_ratio(FI(Fr), LI(Lr), m1);
+    cv::Scalar t1, t2, t3;
+    cv::pow(a1 * b1 * c1 * d1,0.25,t1);
+    cv::pow(a2 * b2 * c2 * d2,0.25,t2);
+    cv::pow(a3 * b3 * c3 * d3,0.25,t3);
+    cv::Scalar tmp1, tmp2, tmp3;
+    cv::pow(d1 / a1,0.5,tmp1);
+    cv::pow(d2 / a2,0.5,tmp2);
+    cv::pow(d3 / a3,0.5,tmp3);
+    cv::Scalar x1 = t1 / tmp1;
+    cv::Scalar x2 = t2 / tmp2;
+    cv::Scalar x3 = t3 / tmp3;
+    x1 = tune(x1);
+    x2 = tune(x2);
+    x3 = tune(x3);
+    Fb = adjust_luminance(Fb,x1);
+    Fg = adjust_luminance(Fg,x2);
+    Fr = adjust_luminance(Fr,x3);
+    cv::pow(b1 / c1,0.5,tmp1);
+    cv::pow(b2 / c2,0.5,tmp2);
+    cv::pow(b3 / c3,0.5,tmp3);
+    cv::Scalar y1 = t1 / tmp1;
+    cv::Scalar y2 = t2 / tmp2;
+    cv::Scalar y3 = t3 / tmp3;
+    y1 = tune(y1);
+    y2 = tune(y2);
+    y3 = tune(y3);
+    Bb = adjust_luminance(Bb,y1);
+    Bg = adjust_luminance(Bg,y2);
+    Br = adjust_luminance(Br,y3);
+    cv::pow(c1 / d1,0.5,tmp1);
+    cv::pow(c2 / d2,0.5,tmp2);
+    cv::pow(c3 / d3,0.5,tmp3);
+    cv::Scalar z1 = t1 / tmp1;
+    cv::Scalar z2 = t2 / tmp2;
+    cv::Scalar z3 = t3 / tmp3;
+    z1 = tune(z1);
+    z2 = tune(z2);
+    z3 = tune(z3);
+    Lb = adjust_luminance(Lb,z1);
+    Lg = adjust_luminance(Lg,z2);
+    Lr = adjust_luminance(Lr,z3);
+    cv::pow(a1 / b1,0.5,tmp1);
+    cv::pow(a2 / b2,0.5,tmp2);
+    cv::pow(a3 / b3,0.5,tmp3);
+    cv::Scalar w1 = t1 / tmp1;
+    cv::Scalar w2 = t2 / tmp2;
+    cv::Scalar w3 = t3 / tmp3;
+    w1 = tune(w1);
+    w2 = tune(w2);
+    w3 = tune(w3);
+    Rb = adjust_luminance(Rb,w1);
+    Rg = adjust_luminance(Rg,w2);
+    Rr = adjust_luminance(Rr,w3);
+    cv::Mat img1, img2, img3, img4;
+    cv::merge(std::vector<cv::Mat>{Fb,Fg,Fr},img1);
+    cv::merge(std::vector<cv::Mat>{Bb,Bg,Br},img2);
+    cv::merge(std::vector<cv::Mat>{Lb,Lg,Lr},img3);
+    cv::merge(std::vector<cv::Mat>{Rb,Rg,Rr},img4);
+    vec_images_ = {img1, img2, img3, img4};
     return this->shared_from_this();
+  }
+  cv::Mat get_weights_and_masks(std::vector<cv::Mat> _images) {
+    cv::Mat front = _images[0].clone();
+    cv::Mat back  = _images[1].clone();
+    cv::Mat left  = _images[2].clone();
+    cv::Mat right = _images[3].clone();
+    return cv::Mat();
   }
   protected:
   cv::Mat FL() const {
@@ -139,11 +244,11 @@ class BirdView : public BaseThread, std::enable_shared_from_this<BirdView> {
   cv::Mat C() const {
     return image_(cv::Range(static_settings.yt,static_settings.yb),cv::Range(static_settings.xl,static_settings.xr)).clone();
   }
-  bool drop_if_full = false;
+  bool drop_if_full_ = false;
   std::shared_ptr<Buffer<cv::Mat>> sptr_buffer_ = std::shared_ptr<Buffer<cv::Mat>>(nullptr);
   std::shared_ptr<ProjectedImageBufferManager> sptr_proc_buffer_manager_ = std::shared_ptr<ProjectedImageBufferManager>(nullptr);
   cv::Mat car_image_ = static_settings.car_image.clone();
-  cv::Mat image_ = cv::Mat::zeros(static_settings.total_h, static_settings.total_w);
+  cv::Mat image_ = cv::Mat::zeros(static_settings.total_h, static_settings.total_w,CV_8U);
   std::vector<cv::Mat> vec_images_, vec_weights_, vec_masks_;
   cv::Mat F_, B_, L_, R_, FL_, FR_, BL_, BR_, C_;
 };

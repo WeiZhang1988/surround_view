@@ -1,4 +1,5 @@
 #include "structures.hpp"
+#include "utils.hpp"
 #include "param_setting.hpp"
 #include "camera_model.hpp"
 #include "imagebuffer.hpp"

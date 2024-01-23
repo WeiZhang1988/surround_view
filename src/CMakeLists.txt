@@ -15,6 +15,7 @@ target_include_directories(svs BEFORE PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
 
 
 install(FILES structures.hpp	
+							utils.hpp
 							param_setting.hpp
 							semaphore.hpp
 							camera_model.hpp

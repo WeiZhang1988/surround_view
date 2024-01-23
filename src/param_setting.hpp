@@ -34,7 +34,7 @@ class Settings{
     {"back", {{shift_w + 120, shift_h},{shift_w + 480, shift_h},{shift_w + 120, shift_h + 160},{shift_w + 480, shift_h + 160}}},
     {"left", {{shift_h + 280, shift_w},{shift_h + 840, shift_w},{shift_h + 280, shift_w + 160},{shift_h + 840, shift_w + 160}}},
     {"right",{{shift_h + 160, shift_w},{shift_h + 720, shift_w},{shift_h + 160, shift_w + 160},{shift_h + 720, shift_w + 160}}}};
-  cv::Mat car_image = cv::imread(".data/images/car.png", cv::IMREAD_COLOR);
+  cv::Mat car_image = cv::imread("./data/images/car.png", cv::IMREAD_COLOR);
 };
 static Settings static_settings = Settings();
 } //namespace SVS
