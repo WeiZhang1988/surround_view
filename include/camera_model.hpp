@@ -15,7 +15,7 @@ class CameraModel : public std::enable_shared_from_this<CameraModel> {
     if ( access( _camera_param_file.c_str(), F_OK ) != -1 ) {
       throw std::runtime_error("Cannot find camera param file");
     }
-    if (static_settings.camera_names.find(_camera_name) == static_settings.camera_names.end()) {
+    if (std::find(static_settings.camera_names.begin(),static_settings.camera_names.end(),_camera_name) == static_settings.camera_names.end()) {
       throw std::runtime_error("Unknown camera name: " + _camera_name);
     }
     camera_param_file_ = _camera_param_file;

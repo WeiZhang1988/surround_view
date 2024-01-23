@@ -4,7 +4,6 @@
 #include <map>
 #include <string>
 #include <vector>
-#include <unordered_set>
 #include <opencv2/opencv.hpp>
 
 namespace SVS {
@@ -13,7 +12,7 @@ class Settings{
   Settings() {
     cv::resize(car_image, car_image, cv::Size(xr - xl, yb - yt), 0, 0, cv::INTER_LINEAR);
   }
-  std::unordered_set<std::string> camera_names{"front", "back", "left", "right"};
+  std::vector<std::string> camera_names{"front", "back", "left", "right"};
   int shift_w{300};
   int shift_h{300};
   int inn_shift_w{20};
