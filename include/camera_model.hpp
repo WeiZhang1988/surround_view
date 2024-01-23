@@ -12,7 +12,7 @@ namespace SVS {
 class CameraModel : public std::enable_shared_from_this<CameraModel> {
   public:
   CameraModel(std::string _camera_param_file, std::string _camera_name) {
-    if ( access( _camera_param_file.c_str(), F_OK ) != -1 ) {
+    if ( access( _camera_param_file.c_str(), F_OK ) == -1 ) {
       throw std::runtime_error("Cannot find camera param file");
     }
     if (std::find(static_settings.camera_names.begin(),static_settings.camera_names.end(),_camera_name) == static_settings.camera_names.end()) {
@@ -29,7 +29,9 @@ class CameraModel : public std::enable_shared_from_this<CameraModel> {
     cv::FileStorage fs{camera_param_file_, cv::FileStorage::READ};
     fs["camera_matrix"]>>camera_matrix_;
     fs["dist_coeffs"]>>dist_coeffs_;
-    fs["resolution"]>>resolution_;
+    cv::Mat tmp;
+    fs["resolution"]>>tmp;
+    resolution_ = cv::Size(tmp.at<double>(0),tmp.at<double>(1));
     fs["scale_xy"]>>scale_xy_;
     fs["shift_xy"]>>shift_xy_;
     fs["project_matrix"]>>project_matrix_;
