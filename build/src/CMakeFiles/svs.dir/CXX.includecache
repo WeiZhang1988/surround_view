@@ -27,6 +27,10 @@ vector
 -
 memory
 -
+mutex
+-
+stdexcept
+-
 opencv2/opencv.hpp
 -
 structures.hpp

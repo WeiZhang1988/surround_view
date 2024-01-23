@@ -4,6 +4,8 @@
 #include <cmath>
 #include <vector>
 #include <memory>
+#include <mutex>
+#include <stdexcept>
 #include <opencv2/opencv.hpp>
 #include "structures.hpp"
 #include "param_setting.hpp"
@@ -76,14 +78,14 @@ class BirdView : public BaseThread, std::enable_shared_from_this<BirdView> {
     }
     cv::Mat Mmat = cv::imread(_masks_iamge, cv::IMREAD_UNCHANGED);
     cv::cvtColor(GMat, GMat, cv::COLOR_BGRA2RGBA);
-    Mmat = convert_binary_to_bool(Mmat);
+    Mmat = static_utils.convert_binary_to_bool(Mmat);
     vec_masks_.clear();
     cv::split(Mmat, vec_masks_);
   }
   cv::Mat merge(cv::Mat _imA, cv::Mat _imB, int k) {
     return (_imA * vec_weights_[k] + _imB * (1 - vec_weights_[k]));
   }
-  void stich_all_parts() {
+  void stitch_all_parts() {
     cv::Mat front = vec_images_[0].clone();
     cv::Mat back  = vec_images_[1].clone();
     cv::Mat left  = vec_images_[2].clone();
@@ -136,18 +138,18 @@ class BirdView : public BaseThread, std::enable_shared_from_this<BirdView> {
     cv::Mat Rb = Rv[0].clone();
     cv::Mat Rg = Rv[1].clone();
     cv::Mat Rr = Rv[2].clone();
-    cv::Scalar a1 = mean_luminance_ratio(RII(Rb), FII(Fb), m2);
-    cv::Scalar a2 = mean_luminance_ratio(RII(Rg), FII(Fg), m2);
-    cv::Scalar a3 = mean_luminance_ratio(RII(Rr), FII(Fr), m2);
-    cv::Scalar b1 = mean_luminance_ratio(BIV(Bb), RIV(Rb), m4);
-    cv::Scalar b2 = mean_luminance_ratio(BIV(Bg), RIV(Rg), m4);
-    cv::Scalar b3 = mean_luminance_ratio(BIV(Br), RIV(Rr), m4);
-    cv::Scalar c1 = mean_luminance_ratio(LIII(Lb), BIII(Bb), m3);
-    cv::Scalar c2 = mean_luminance_ratio(LIII(Lg), BIII(Bg), m3);
-    cv::Scalar c3 = mean_luminance_ratio(LIII(Lr), BIII(Br), m3);
-    cv::Scalar d1 = mean_luminance_ratio(FI(Fb), LI(Lb), m1);
-    cv::Scalar d2 = mean_luminance_ratio(FI(Fg), LI(Lg), m1);
-    cv::Scalar d3 = mean_luminance_ratio(FI(Fr), LI(Lr), m1);
+    cv::Scalar a1 = static_utils.mean_luminance_ratio(RII(Rb), FII(Fb), m2);
+    cv::Scalar a2 = static_utils.mean_luminance_ratio(RII(Rg), FII(Fg), m2);
+    cv::Scalar a3 = static_utils.mean_luminance_ratio(RII(Rr), FII(Fr), m2);
+    cv::Scalar b1 = static_utils.mean_luminance_ratio(BIV(Bb), RIV(Rb), m4);
+    cv::Scalar b2 = static_utils.mean_luminance_ratio(BIV(Bg), RIV(Rg), m4);
+    cv::Scalar b3 = static_utils.mean_luminance_ratio(BIV(Br), RIV(Rr), m4);
+    cv::Scalar c1 = static_utils.mean_luminance_ratio(LIII(Lb), BIII(Bb), m3);
+    cv::Scalar c2 = static_utils.mean_luminance_ratio(LIII(Lg), BIII(Bg), m3);
+    cv::Scalar c3 = static_utils.mean_luminance_ratio(LIII(Lr), BIII(Br), m3);
+    cv::Scalar d1 = static_utils.mean_luminance_ratio(FI(Fb), LI(Lb), m1);
+    cv::Scalar d2 = static_utils.mean_luminance_ratio(FI(Fg), LI(Lg), m1);
+    cv::Scalar d3 = static_utils.mean_luminance_ratio(FI(Fr), LI(Lr), m1);
     cv::Scalar t1, t2, t3;
     cv::pow(a1 * b1 * c1 * d1,0.25,t1);
     cv::pow(a2 * b2 * c2 * d2,0.25,t2);
@@ -162,9 +164,9 @@ class BirdView : public BaseThread, std::enable_shared_from_this<BirdView> {
     x1 = tune(x1);
     x2 = tune(x2);
     x3 = tune(x3);
-    Fb = adjust_luminance(Fb,x1);
-    Fg = adjust_luminance(Fg,x2);
-    Fr = adjust_luminance(Fr,x3);
+    Fb = static_utils.adjust_luminance(Fb,x1);
+    Fg = static_utils.adjust_luminance(Fg,x2);
+    Fr = static_utils.adjust_luminance(Fr,x3);
     cv::pow(b1 / c1,0.5,tmp1);
     cv::pow(b2 / c2,0.5,tmp2);
     cv::pow(b3 / c3,0.5,tmp3);
@@ -174,9 +176,9 @@ class BirdView : public BaseThread, std::enable_shared_from_this<BirdView> {
     y1 = tune(y1);
     y2 = tune(y2);
     y3 = tune(y3);
-    Bb = adjust_luminance(Bb,y1);
-    Bg = adjust_luminance(Bg,y2);
-    Br = adjust_luminance(Br,y3);
+    Bb = static_utils.adjust_luminance(Bb,y1);
+    Bg = static_utils.adjust_luminance(Bg,y2);
+    Br = static_utils.adjust_luminance(Br,y3);
     cv::pow(c1 / d1,0.5,tmp1);
     cv::pow(c2 / d2,0.5,tmp2);
     cv::pow(c3 / d3,0.5,tmp3);
@@ -186,9 +188,9 @@ class BirdView : public BaseThread, std::enable_shared_from_this<BirdView> {
     z1 = tune(z1);
     z2 = tune(z2);
     z3 = tune(z3);
-    Lb = adjust_luminance(Lb,z1);
-    Lg = adjust_luminance(Lg,z2);
-    Lr = adjust_luminance(Lr,z3);
+    Lb = static_utils.adjust_luminance(Lb,z1);
+    Lg = static_utils.adjust_luminance(Lg,z2);
+    Lr = static_utils.adjust_luminance(Lr,z3);
     cv::pow(a1 / b1,0.5,tmp1);
     cv::pow(a2 / b2,0.5,tmp2);
     cv::pow(a3 / b3,0.5,tmp3);
@@ -198,9 +200,9 @@ class BirdView : public BaseThread, std::enable_shared_from_this<BirdView> {
     w1 = tune(w1);
     w2 = tune(w2);
     w3 = tune(w3);
-    Rb = adjust_luminance(Rb,w1);
-    Rg = adjust_luminance(Rg,w2);
-    Rr = adjust_luminance(Rr,w3);
+    Rb = static_utils.adjust_luminance(Rb,w1);
+    Rg = static_utils.adjust_luminance(Rg,w2);
+    Rr = static_utils.adjust_luminance(Rr,w3);
     cv::Mat img1, img2, img3, img4;
     cv::merge(std::vector<cv::Mat>{Fb,Fg,Fr},img1);
     cv::merge(std::vector<cv::Mat>{Bb,Bg,Br},img2);
@@ -209,12 +211,68 @@ class BirdView : public BaseThread, std::enable_shared_from_this<BirdView> {
     vec_images_ = {img1, img2, img3, img4};
     return this->shared_from_this();
   }
-  cv::Mat get_weights_and_masks(std::vector<cv::Mat> _images) {
+  void get_weights_and_masks(std::vector<cv::Mat> _images, cv::Mat &_out_G, cv::Mat &_out_M) {
     cv::Mat front = _images[0].clone();
     cv::Mat back  = _images[1].clone();
     cv::Mat left  = _images[2].clone();
     cv::Mat right = _images[3].clone();
-    return cv::Mat();
+    cv::Mat G0,M0,G1,M1,G2,M2,G3,M3;
+    static_utils.get_weight_mask_matrix(FI(front.clone()), LI(left.clone()), G0, M0);
+    static_utils.get_weight_mask_matrix(FII(front.clone()), RII(right.clone()), G1, M1);
+    static_utils.get_weight_mask_matrix(BIII(back.clone()), LIII(left.clone()), G2, M2);
+    static_utils.get_weight_mask_matrix(BIV(back.clone()), RIV(right.clone()), G3, M3);
+    cv::Mat tmp0, tmp1, tmp2, tmp3;
+    cv::merge(std::vector<cv::Mat>{G0,G0,G0},tmp0);
+    cv::merge(std::vector<cv::Mat>{G1,G1,G1},tmp1);
+    cv::merge(std::vector<cv::Mat>{G2,G2,G2},tmp2);
+    cv::merge(std::vector<cv::Mat>{G3,G3,G3},tmp3);
+    vec_weights_ = std::vector<cv::Mat>{tmp0,tmp1,tmp2,tmp3};
+    tmp0 = M0 / 255.0;
+    tmp0.convertTo(tmp0, CV_8U);
+    tmp1 = M1 / 255.0;
+    tmp1.convertTo(tmp1, CV_8U);
+    tmp2 = M2 / 255.0;
+    tmp2.convertTo(tmp2, CV_8U);
+    tmp3 = M3 / 255.0;
+    tmp3.convertTo(tmp3, CV_8U);
+    vec_masks_ = std::vector<cv::Mat>{tmp0,tmp1,tmp2,tmp3};
+    cv::merge(std::vector<cv::Mat>{G0,G1,G2,G3},_out_G);
+    cv::merge(std::vector<cv::Mat>{M0,M1,M2,M3},_out_M);
+  }
+  void make_white_balance() {
+    image_ = static_utils.make_white_balance(image_.clone());
+  }
+  void run() {
+    if (sptr_proc_buffer_manager_ == std::shared_ptr<ProjectedImageBufferManager>(nullptr)) {
+      std::runtime_error("This thread requires a buffer of projected images to run");
+    }
+    while(true) {
+      {
+        std::unique_lock<std::mutex> lock(stop_mutex_);
+        if (stopped_) {
+          stopped_ = false;
+          break;
+        }
+      }
+      processing_time_ = clock_.elapsed();
+      clock_.start();
+      {
+        std::unique_lock<std::mutex> lock(processing_mutex_);
+        std::map<int, cv::Mat> tmpMap = sptr_proc_buffer_manager_->get();
+        std::vector<cv::Mat> tmpVec;
+        for (std::pair<int, cv::Mat> pair : tmpMap) {
+          tmpVec.push_back(pair.second);
+        }
+        update_frames(tmpVec);
+        make_luminance_balance()->stitch_all_parts();
+        make_white_balance();
+        copy_car_image();
+        sptr_buffer_->add(image_.clone(), drop_if_full_);
+      }
+      update_fps(processing_time_);
+      stat_data_.frames_processed_count_ += 1;
+      //update_statistics_gui.emit(self.stat_data)
+    }
   }
   protected:
   cv::Mat FL() const {
