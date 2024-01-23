@@ -60,6 +60,9 @@ class BirdView : public BaseThread, std::enable_shared_from_this<BirdView> {
   cv::Mat get() {
     return sptr_buffer_->get().clone();
   }
+  cv::Mat get_image() {
+    return image_.clone();
+  }
   void update_frames(std::vector<cv::Mat> _vec_images) {
     vec_images_ = _vec_images;
   }
