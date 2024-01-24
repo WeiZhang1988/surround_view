@@ -111,7 +111,7 @@ class BirdView : public BaseThread {
   void copy_car_image() {
     car_image_.copyTo(C());
   }
-  float tune(float _x) {
+  double tune(double _x) {
     if (_x > 1.0) {
       return std::exp((1.0 - _x) * 0.5);
     } else {
@@ -144,29 +144,29 @@ class BirdView : public BaseThread {
     cv::Mat Rb = Rv[0].clone();
     cv::Mat Rg = Rv[1].clone();
     cv::Mat Rr = Rv[2].clone();
-    float a1 = static_utils.mean_luminance_ratio(RII(Rb), FII(Fb), m2);
-    float a2 = static_utils.mean_luminance_ratio(RII(Rg), FII(Fg), m2);
-    float a3 = static_utils.mean_luminance_ratio(RII(Rr), FII(Fr), m2);
-    float b1 = static_utils.mean_luminance_ratio(BIV(Bb), RIV(Rb), m4);
-    float b2 = static_utils.mean_luminance_ratio(BIV(Bg), RIV(Rg), m4);
-    float b3 = static_utils.mean_luminance_ratio(BIV(Br), RIV(Rr), m4);
-    float c1 = static_utils.mean_luminance_ratio(LIII(Lb), BIII(Bb), m3);
-    float c2 = static_utils.mean_luminance_ratio(LIII(Lg), BIII(Bg), m3);
-    float c3 = static_utils.mean_luminance_ratio(LIII(Lr), BIII(Br), m3);
-    float d1 = static_utils.mean_luminance_ratio(FI(Fb), LI(Lb), m1);
-    float d2 = static_utils.mean_luminance_ratio(FI(Fg), LI(Lg), m1);
-    float d3 = static_utils.mean_luminance_ratio(FI(Fr), LI(Lr), m1);
-    float t1, t2, t3;
+    double a1 = static_utils.mean_luminance_ratio(RII(Rb), FII(Fb), m2);
+    double a2 = static_utils.mean_luminance_ratio(RII(Rg), FII(Fg), m2);
+    double a3 = static_utils.mean_luminance_ratio(RII(Rr), FII(Fr), m2);
+    double b1 = static_utils.mean_luminance_ratio(BIV(Bb), RIV(Rb), m4);
+    double b2 = static_utils.mean_luminance_ratio(BIV(Bg), RIV(Rg), m4);
+    double b3 = static_utils.mean_luminance_ratio(BIV(Br), RIV(Rr), m4);
+    double c1 = static_utils.mean_luminance_ratio(LIII(Lb), BIII(Bb), m3);
+    double c2 = static_utils.mean_luminance_ratio(LIII(Lg), BIII(Bg), m3);
+    double c3 = static_utils.mean_luminance_ratio(LIII(Lr), BIII(Br), m3);
+    double d1 = static_utils.mean_luminance_ratio(FI(Fb), LI(Lb), m1);
+    double d2 = static_utils.mean_luminance_ratio(FI(Fg), LI(Lg), m1);
+    double d3 = static_utils.mean_luminance_ratio(FI(Fr), LI(Lr), m1);
+    double t1, t2, t3;
     t1 = std::pow(a1 * b1 * c1 * d1,0.25f);
     t2 = std::pow(a2 * b2 * c2 * d2,0.25f);
     t3 = std::pow(a3 * b3 * c3 * d3,0.25f);
-    float tmp1, tmp2, tmp3;
+    double tmp1, tmp2, tmp3;
     tmp1 = std::pow(d1 / a1,0.5f);
     tmp2 = std::pow(d2 / a2,0.5f);
     tmp3 = std::pow(d3 / a3,0.5f);
-    float x1 = t1 / tmp1;
-    float x2 = t2 / tmp2;
-    float x3 = t3 / tmp3;
+    double x1 = t1 / tmp1;
+    double x2 = t2 / tmp2;
+    double x3 = t3 / tmp3;
     x1 = tune(x1);
     x2 = tune(x2);
     x3 = tune(x3);
@@ -176,9 +176,9 @@ class BirdView : public BaseThread {
     tmp1 = std::pow(b1 / c1,0.5);
     tmp2 = std::pow(b2 / c2,0.5);
     tmp3 = std::pow(b3 / c3,0.5);
-    float y1 = t1 / tmp1;
-    float y2 = t2 / tmp2;
-    float y3 = t3 / tmp3;
+    double y1 = t1 / tmp1;
+    double y2 = t2 / tmp2;
+    double y3 = t3 / tmp3;
     y1 = tune(y1);
     y2 = tune(y2);
     y3 = tune(y3);
@@ -188,9 +188,9 @@ class BirdView : public BaseThread {
     tmp1 = std::pow(c1 / d1,0.5);
     tmp2 = std::pow(c2 / d2,0.5);
     tmp3 = std::pow(c3 / d3,0.5);
-    float z1 = t1 / tmp1;
-    float z2 = t2 / tmp2;
-    float z3 = t3 / tmp3;
+    double z1 = t1 / tmp1;
+    double z2 = t2 / tmp2;
+    double z3 = t3 / tmp3;
     z1 = tune(z1);
     z2 = tune(z2);
     z3 = tune(z3);
@@ -200,9 +200,9 @@ class BirdView : public BaseThread {
     tmp1 = std::pow(a1 / b1,0.5);
     tmp2 = std::pow(a2 / b2,0.5);
     tmp3 = std::pow(a3 / b3,0.5);
-    float w1 = t1 / tmp1;
-    float w2 = t2 / tmp2;
-    float w3 = t3 / tmp3;
+    double w1 = t1 / tmp1;
+    double w2 = t2 / tmp2;
+    double w3 = t3 / tmp3;
     w1 = tune(w1);
     w2 = tune(w2);
     w3 = tune(w3);
