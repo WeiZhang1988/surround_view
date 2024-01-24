@@ -1,5 +1,5 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/svs.dir/test.cpp.o"
+  "CMakeFiles/svs.dir/svs.cpp.o"
   "libsvs.pdb"
   "libsvs.so"
 )

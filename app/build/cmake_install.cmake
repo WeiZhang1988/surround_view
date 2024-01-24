@@ -1,4 +1,4 @@
-# Install script for directory: /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/test
+# Install script for directory: /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -39,19 +39,19 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/test/build/src/cmake_install.cmake")
+  include("/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/build/src/cmake_install.cmake")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-   "/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/test/exe/data")
+   "/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/exe/data")
   if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-file(INSTALL DESTINATION "/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/test/exe" TYPE DIRECTORY FILES "/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/test/data")
+file(INSTALL DESTINATION "/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/exe" TYPE DIRECTORY FILES "/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/data")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT)
@@ -62,5 +62,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/test/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

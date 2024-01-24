@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/base_thread.hpp
+../include/base_thread.hpp
 cmath
 -
 mutex
@@ -18,9 +18,9 @@ chrono
 thread
 -
 structures.hpp
-/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/structures.hpp
+../include/structures.hpp
 
-/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/birdview.hpp
+../include/birdview.hpp
 cmath
 -
 vector
@@ -34,19 +34,19 @@ stdexcept
 opencv2/opencv.hpp
 -
 structures.hpp
-/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/structures.hpp
+../include/structures.hpp
 param_setting.hpp
-/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/param_setting.hpp
+../include/param_setting.hpp
 base_thread.hpp
-/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/base_thread.hpp
+../include/base_thread.hpp
 imagebuffer.hpp
-/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/imagebuffer.hpp
+../include/imagebuffer.hpp
 process_thread.hpp
-/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/process_thread.hpp
+../include/process_thread.hpp
 utils.hpp
-/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/utils.hpp
+../include/utils.hpp
 
-/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/camera_model.hpp
+../include/camera_model.hpp
 unistd.h
 -
 string
@@ -58,9 +58,9 @@ stdexcept
 opencv2/opencv.hpp
 -
 param_setting.hpp
-/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/param_setting.hpp
+../include/param_setting.hpp
 
-/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/capture_thread.hpp
+../include/capture_thread.hpp
 mutex
 -
 string
@@ -74,13 +74,13 @@ stdexcept
 opencv2/opencv.hpp
 -
 structures.hpp
-/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/structures.hpp
+../include/structures.hpp
 base_thread.hpp
-/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/base_thread.hpp
+../include/base_thread.hpp
 imagebuffer.hpp
-/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/imagebuffer.hpp
+../include/imagebuffer.hpp
 
-/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/imagebuffer.hpp
+../include/imagebuffer.hpp
 mutex
 -
 queue
@@ -94,11 +94,11 @@ memory
 opencv2/opencv.hpp
 -
 semaphore.hpp
-/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/semaphore.hpp
+../include/semaphore.hpp
 param_setting.hpp
-/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/param_setting.hpp
+../include/param_setting.hpp
 
-/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/param_setting.hpp
+../include/param_setting.hpp
 map
 -
 string
@@ -108,7 +108,7 @@ vector
 opencv2/opencv.hpp
 -
 
-/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/process_thread.hpp
+../include/process_thread.hpp
 mutex
 -
 string
@@ -122,15 +122,15 @@ stdexcept
 opencv2/opencv.hpp
 -
 camera_model.hpp
-/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/camera_model.hpp
+../include/camera_model.hpp
 base_thread.hpp
-/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/base_thread.hpp
+../include/base_thread.hpp
 imagebuffer.hpp
-/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/imagebuffer.hpp
+../include/imagebuffer.hpp
 capture_thread.hpp
-/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/capture_thread.hpp
+../include/capture_thread.hpp
 
-/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/semaphore.hpp
+../include/semaphore.hpp
 cassert
 -
 chrono
@@ -144,7 +144,7 @@ limits
 mutex
 -
 
-/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/simple_gui.hpp
+../include/simple_gui.hpp
 iostream
 -
 string
@@ -156,39 +156,39 @@ functional
 opencv2/opencv.hpp
 -
 utils.hpp
-/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/utils.hpp
+../include/utils.hpp
 
-/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/structures.hpp
+../include/structures.hpp
 opencv2/opencv.hpp
 -
 
-/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/utils.hpp
+../include/utils.hpp
 stdexcept
 -
 opencv2/opencv.hpp
 -
 
-/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/src/test.cpp
-../include/structures.hpp
-/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/structures.hpp
-../include/utils.hpp
-/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/utils.hpp
-../include/param_setting.hpp
-/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/param_setting.hpp
-../include/camera_model.hpp
-/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/camera_model.hpp
-../include/imagebuffer.hpp
-/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/imagebuffer.hpp
-../include/base_thread.hpp
-/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/base_thread.hpp
-../include/capture_thread.hpp
-/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/capture_thread.hpp
-../include/process_thread.hpp
-/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/process_thread.hpp
-../include/birdview.hpp
-/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/birdview.hpp
-../include/simple_gui.hpp
-/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include/simple_gui.hpp
+/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/src/svs.cpp
+structures.hpp
+/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/src/structures.hpp
+utils.hpp
+/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/src/utils.hpp
+param_setting.hpp
+/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/src/param_setting.hpp
+camera_model.hpp
+/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/src/camera_model.hpp
+imagebuffer.hpp
+/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/src/imagebuffer.hpp
+base_thread.hpp
+/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/src/base_thread.hpp
+capture_thread.hpp
+/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/src/capture_thread.hpp
+process_thread.hpp
+/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/src/process_thread.hpp
+birdview.hpp
+/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/src/birdview.hpp
+simple_gui.hpp
+/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/src/simple_gui.hpp
 
 /usr/include/opencv4/opencv2/calib3d.hpp
 opencv2/core.hpp

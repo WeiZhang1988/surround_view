@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/test
+CMAKE_SOURCE_DIR = /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/test/build
+CMAKE_BINARY_DIR = /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -79,6 +79,17 @@ install/local/fast: preinstall/fast
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
 	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
 .PHONY : install/local/fast
+
+# Special rule for the target edit_cache
+edit_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake cache editor..."
+	/usr/bin/ccmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+.PHONY : edit_cache
+
+# Special rule for the target edit_cache
+edit_cache/fast: edit_cache
+
+.PHONY : edit_cache/fast
 
 # Special rule for the target install
 install: preinstall
@@ -113,27 +124,16 @@ rebuild_cache/fast: rebuild_cache
 
 .PHONY : rebuild_cache/fast
 
-# Special rule for the target edit_cache
-edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake cache editor..."
-	/usr/bin/ccmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
-.PHONY : edit_cache
-
-# Special rule for the target edit_cache
-edit_cache/fast: edit_cache
-
-.PHONY : edit_cache/fast
-
 # The main all target
 all: cmake_check_build_system
-	cd /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/test/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/test/build/CMakeFiles /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/test/build/src/CMakeFiles/progress.marks
-	cd /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/test/build && $(MAKE) -f CMakeFiles/Makefile2 src/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/test/build/CMakeFiles 0
+	cd /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/build/CMakeFiles /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/build/src/CMakeFiles/progress.marks
+	cd /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/build && $(MAKE) -f CMakeFiles/Makefile2 src/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/test/build && $(MAKE) -f CMakeFiles/Makefile2 src/clean
+	cd /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/build && $(MAKE) -f CMakeFiles/Makefile2 src/clean
 .PHONY : clean
 
 # The main clean target
@@ -143,60 +143,60 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/test/build && $(MAKE) -f CMakeFiles/Makefile2 src/preinstall
+	cd /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/build && $(MAKE) -f CMakeFiles/Makefile2 src/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/test/build && $(MAKE) -f CMakeFiles/Makefile2 src/preinstall
+	cd /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/build && $(MAKE) -f CMakeFiles/Makefile2 src/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/test/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
-src/CMakeFiles/test.dir/rule:
-	cd /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/test/build && $(MAKE) -f CMakeFiles/Makefile2 src/CMakeFiles/test.dir/rule
-.PHONY : src/CMakeFiles/test.dir/rule
+src/CMakeFiles/run_get_weight_matrices.dir/rule:
+	cd /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/build && $(MAKE) -f CMakeFiles/Makefile2 src/CMakeFiles/run_get_weight_matrices.dir/rule
+.PHONY : src/CMakeFiles/run_get_weight_matrices.dir/rule
 
 # Convenience name for target.
-test: src/CMakeFiles/test.dir/rule
+run_get_weight_matrices: src/CMakeFiles/run_get_weight_matrices.dir/rule
 
-.PHONY : test
+.PHONY : run_get_weight_matrices
 
 # fast build rule for target.
-test/fast:
-	cd /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/test/build && $(MAKE) -f src/CMakeFiles/test.dir/build.make src/CMakeFiles/test.dir/build
-.PHONY : test/fast
+run_get_weight_matrices/fast:
+	cd /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/build && $(MAKE) -f src/CMakeFiles/run_get_weight_matrices.dir/build.make src/CMakeFiles/run_get_weight_matrices.dir/build
+.PHONY : run_get_weight_matrices/fast
 
-test.o: test.cpp.o
+run_get_weight_matrices.o: run_get_weight_matrices.cpp.o
 
-.PHONY : test.o
+.PHONY : run_get_weight_matrices.o
 
 # target to build an object file
-test.cpp.o:
-	cd /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/test/build && $(MAKE) -f src/CMakeFiles/test.dir/build.make src/CMakeFiles/test.dir/test.cpp.o
-.PHONY : test.cpp.o
+run_get_weight_matrices.cpp.o:
+	cd /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/build && $(MAKE) -f src/CMakeFiles/run_get_weight_matrices.dir/build.make src/CMakeFiles/run_get_weight_matrices.dir/run_get_weight_matrices.cpp.o
+.PHONY : run_get_weight_matrices.cpp.o
 
-test.i: test.cpp.i
+run_get_weight_matrices.i: run_get_weight_matrices.cpp.i
 
-.PHONY : test.i
+.PHONY : run_get_weight_matrices.i
 
 # target to preprocess a source file
-test.cpp.i:
-	cd /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/test/build && $(MAKE) -f src/CMakeFiles/test.dir/build.make src/CMakeFiles/test.dir/test.cpp.i
-.PHONY : test.cpp.i
+run_get_weight_matrices.cpp.i:
+	cd /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/build && $(MAKE) -f src/CMakeFiles/run_get_weight_matrices.dir/build.make src/CMakeFiles/run_get_weight_matrices.dir/run_get_weight_matrices.cpp.i
+.PHONY : run_get_weight_matrices.cpp.i
 
-test.s: test.cpp.s
+run_get_weight_matrices.s: run_get_weight_matrices.cpp.s
 
-.PHONY : test.s
+.PHONY : run_get_weight_matrices.s
 
 # target to generate assembly for a file
-test.cpp.s:
-	cd /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/test/build && $(MAKE) -f src/CMakeFiles/test.dir/build.make src/CMakeFiles/test.dir/test.cpp.s
-.PHONY : test.cpp.s
+run_get_weight_matrices.cpp.s:
+	cd /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/build && $(MAKE) -f src/CMakeFiles/run_get_weight_matrices.dir/build.make src/CMakeFiles/run_get_weight_matrices.dir/run_get_weight_matrices.cpp.s
+.PHONY : run_get_weight_matrices.cpp.s
 
 # Help Target
 help:
@@ -206,14 +206,14 @@ help:
 	@echo "... depend"
 	@echo "... install/strip"
 	@echo "... install/local"
+	@echo "... edit_cache"
 	@echo "... install"
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
-	@echo "... edit_cache"
-	@echo "... test"
-	@echo "... test.o"
-	@echo "... test.i"
-	@echo "... test.s"
+	@echo "... run_get_weight_matrices"
+	@echo "... run_get_weight_matrices.o"
+	@echo "... run_get_weight_matrices.i"
+	@echo "... run_get_weight_matrices.s"
 .PHONY : help
 
 
@@ -225,6 +225,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/test/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

@@ -105,7 +105,7 @@ class MultiBufferManager : public std::enable_shared_from_this<MultiBufferManage
   }
   template<typename ThreadType>
   void bind_thread(std::shared_ptr<ThreadType> _sptr_thread, int _buffer_size, bool _sync=true) {
-    _sptr_thread->buffer_manager = this->shared_from_this();
+    _sptr_thread->buffer_manager = shared_from_this();
   }
   void add(int _device_id, ImageFrame _image_frame, bool _drop_if_full) {
     buffer_maps_[_device_id]->add(_image_frame, _drop_if_full);
@@ -187,7 +187,7 @@ class ProjectedImageBufferManager : public std::enable_shared_from_this<Projecte
     std::string name = _sptr_thread->camera_model_.camera_name_;
     cv::Size shape = static_settings.project_shapes[name];
     current_images_[_sptr_thread->device_id] = std::make_shared<cv::Mat>(cv::Mat::zeros(shape.height,shape.width,3));
-    _sptr_thread->proc_buffer_manager_ = this->shared_from_this();
+    _sptr_thread->proc_buffer_manager_ = shared_from_this();
   }
   std::map<int,cv::Mat> get () {
     return sptr_buffer_->get();

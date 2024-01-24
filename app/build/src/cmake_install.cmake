@@ -1,4 +1,4 @@
-# Install script for directory: /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/test/src
+# Install script for directory: /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/src
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -38,29 +38,29 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  if(EXISTS "$ENV{DESTDIR}/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/test/exe/test" AND
-     NOT IS_SYMLINK "$ENV{DESTDIR}/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/test/exe/test")
+  if(EXISTS "$ENV{DESTDIR}/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/exe/run_get_weight_matrices" AND
+     NOT IS_SYMLINK "$ENV{DESTDIR}/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/exe/run_get_weight_matrices")
     file(RPATH_CHECK
-         FILE "$ENV{DESTDIR}/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/test/exe/test"
-         RPATH "/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/test/../lib")
+         FILE "$ENV{DESTDIR}/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/exe/run_get_weight_matrices"
+         RPATH "/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/../lib")
   endif()
   list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-   "/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/test/exe/test")
+   "/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/exe/run_get_weight_matrices")
   if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-file(INSTALL DESTINATION "/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/test/exe" TYPE EXECUTABLE FILES "/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/test/build/src/test")
-  if(EXISTS "$ENV{DESTDIR}/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/test/exe/test" AND
-     NOT IS_SYMLINK "$ENV{DESTDIR}/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/test/exe/test")
+file(INSTALL DESTINATION "/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/exe" TYPE EXECUTABLE FILES "/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/build/src/run_get_weight_matrices")
+  if(EXISTS "$ENV{DESTDIR}/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/exe/run_get_weight_matrices" AND
+     NOT IS_SYMLINK "$ENV{DESTDIR}/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/exe/run_get_weight_matrices")
     file(RPATH_CHANGE
-         FILE "$ENV{DESTDIR}/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/test/exe/test"
-         OLD_RPATH "/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/test/../lib:"
-         NEW_RPATH "/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/test/../lib")
+         FILE "$ENV{DESTDIR}/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/exe/run_get_weight_matrices"
+         OLD_RPATH "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"
+         NEW_RPATH "/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/../lib")
     if(CMAKE_INSTALL_DO_STRIP)
-      execute_process(COMMAND "/usr/bin/strip" "$ENV{DESTDIR}/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/test/exe/test")
+      execute_process(COMMAND "/usr/bin/strip" "$ENV{DESTDIR}/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/exe/run_get_weight_matrices")
     endif()
   endif()
 endif()

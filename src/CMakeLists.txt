@@ -1,17 +1,19 @@
 set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 set(CMAKE_INSTALL_RPATH ${PROJECT_SOURCE_DIR}/lib)
+set(SVS_INCLUDE ${PROJECT_SOURCE_DIR}/include)
 
 find_package(OpenCV REQUIRED)
 										
 #link_directories
 
-add_library(svs SHARED test.cpp)
+add_library(svs SHARED svs.cpp)
 
 target_link_libraries(svs PUBLIC pthread
 																 ${OpenCV_LIBRARIES})
 																	
 target_include_directories(svs BEFORE PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
-																						 ${OpenCV_INCLUDE_DIRS})
+																						 ${OpenCV_INCLUDE_DIRS}
+																						 ${PROJECT_SOURCE_DIR}/include)
 
 
 # install(FILES structures.hpp	
@@ -27,4 +29,4 @@ target_include_directories(svs BEFORE PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
 							# simple_gui.hpp
 							# DESTINATION ${PROJECT_SOURCE_DIR}/include)
 							# 
-# install(TARGETS svs LIBRARY DESTINATION ${PROJECT_SOURCE_DIR}/lib)
+install(TARGETS svs LIBRARY DESTINATION ${PROJECT_SOURCE_DIR}/lib)

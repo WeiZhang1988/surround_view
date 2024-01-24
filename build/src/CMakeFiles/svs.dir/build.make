@@ -57,27 +57,27 @@ include src/CMakeFiles/svs.dir/progress.make
 # Include the compile flags for this target's objects.
 include src/CMakeFiles/svs.dir/flags.make
 
-src/CMakeFiles/svs.dir/test.cpp.o: src/CMakeFiles/svs.dir/flags.make
-src/CMakeFiles/svs.dir/test.cpp.o: ../src/test.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object src/CMakeFiles/svs.dir/test.cpp.o"
-	cd /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/svs.dir/test.cpp.o -c /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/src/test.cpp
+src/CMakeFiles/svs.dir/svs.cpp.o: src/CMakeFiles/svs.dir/flags.make
+src/CMakeFiles/svs.dir/svs.cpp.o: ../src/svs.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object src/CMakeFiles/svs.dir/svs.cpp.o"
+	cd /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/svs.dir/svs.cpp.o -c /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/src/svs.cpp
 
-src/CMakeFiles/svs.dir/test.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/svs.dir/test.cpp.i"
-	cd /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/src/test.cpp > CMakeFiles/svs.dir/test.cpp.i
+src/CMakeFiles/svs.dir/svs.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/svs.dir/svs.cpp.i"
+	cd /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/src/svs.cpp > CMakeFiles/svs.dir/svs.cpp.i
 
-src/CMakeFiles/svs.dir/test.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/svs.dir/test.cpp.s"
-	cd /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/src/test.cpp -o CMakeFiles/svs.dir/test.cpp.s
+src/CMakeFiles/svs.dir/svs.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/svs.dir/svs.cpp.s"
+	cd /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/src/svs.cpp -o CMakeFiles/svs.dir/svs.cpp.s
 
 # Object files for target svs
 svs_OBJECTS = \
-"CMakeFiles/svs.dir/test.cpp.o"
+"CMakeFiles/svs.dir/svs.cpp.o"
 
 # External object files for target svs
 svs_EXTERNAL_OBJECTS =
 
-src/libsvs.so: src/CMakeFiles/svs.dir/test.cpp.o
+src/libsvs.so: src/CMakeFiles/svs.dir/svs.cpp.o
 src/libsvs.so: src/CMakeFiles/svs.dir/build.make
 src/libsvs.so: /usr/lib/x86_64-linux-gnu/libopencv_stitching.so.4.2.0
 src/libsvs.so: /usr/lib/x86_64-linux-gnu/libopencv_aruco.so.4.2.0

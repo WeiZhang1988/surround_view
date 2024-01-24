@@ -6,5 +6,5 @@ CXX_FLAGS = -std=c++11  -g -O3 -fPIC   -std=gnu++11
 
 CXX_DEFINES = -Dsvs_EXPORTS
 
-CXX_INCLUDES = -I/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/src -isystem /usr/include/opencv4 
+CXX_INCLUDES = -I/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/src -I/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/include -isystem /usr/include/opencv4 
 

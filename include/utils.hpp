@@ -8,18 +8,25 @@ namespace SVS{
 class utils{
   public:
   cv::Mat convert_binary_to_bool(cv::Mat _mask) {
+    cv::Mat tmp;
+    _mask.convertTo(tmp, CV_32F);
     cv::Mat result = _mask / 255.0;
     result.convertTo(result, CV_8U);
     return result.clone();
   }
-  cv::Scalar get_mean_statistics(cv::Mat _gary, cv::Mat _mask) {
-    return cv::sum(_gary.clone() * _mask.clone());
+  float get_mean_statistics(cv::Mat _gary, cv::Mat _mask) {
+    return float(cv::sum(_gary.clone().mul(_mask.clone()))[0]);
   }
-  cv::Scalar mean_luminance_ratio(cv::Mat _grayA, cv::Mat _grayB, cv::Mat _mask) {
-    return get_mean_statistics(_grayA, _mask) / get_mean_statistics(_grayB, _mask);
+  float mean_luminance_ratio(cv::Mat _grayA, cv::Mat _grayB, cv::Mat _mask) {
+    return float(get_mean_statistics(_grayA, _mask)) / float(get_mean_statistics(_grayB, _mask));
   }
-  cv::Mat adjust_luminance(cv::Mat _gray, cv::Scalar _factor) {
-    return cv::min(_gray * _factor, 255);
+  cv::Mat adjust_luminance(cv::Mat _gray, float _factor) {
+    cv::Mat tmp;
+    _gray.convertTo(tmp, CV_32F);
+    cv::Mat result;
+    result = cv::min(tmp * _factor, 255.0f);
+    result.convertTo(result, CV_8U);
+    return result;
   }
   cv::Mat get_mask(cv::Mat _img) {
     cv::Mat gray;
@@ -30,7 +37,7 @@ class utils{
   }
   cv::Mat get_overlap_region_mask(cv::Mat _imA, cv::Mat _imB) {
     cv::Mat overlap;
-    cv::bitwise_and(_imA.clone(),_imA.clone(),overlap);
+    cv::bitwise_and(_imA.clone(),_imB.clone(),overlap);
     cv::Mat mask = get_mask(overlap);
     cv::dilate(mask.clone(),mask,cv::Mat::ones(2,2,CV_8U),cv::Point(-1,-1),2);
     return mask.clone();
@@ -55,7 +62,7 @@ class utils{
     cv::bitwise_and(_imB.clone(),_imB.clone(),imB_diff,overlapMaskInv);
     polyA = get_outmost_polygon_boundary(imA_diff.clone());
     polyB = get_outmost_polygon_boundary(imB_diff.clone());
-    get_mask(_imA.clone()).convertTo(_out_G, CV_64F);
+    get_mask(_imA.clone()).convertTo(_out_G, CV_32F);
     _out_G /= 255.0;
     std::vector<cv::Point> indices; 
     cv::findNonZero(_out_overlapMask==255, indices);
@@ -71,17 +78,18 @@ class utils{
   }
   cv::Mat make_white_balance(cv::Mat _image) {
     std::vector<cv::Mat> channels;
+    std::cout<<"_image "<<_image.type()<<std::endl;
     cv::split(_image.clone(), channels);
     cv::Mat B = channels[0].clone();
     cv::Mat G = channels[1].clone();
     cv::Mat R = channels[2].clone();
-    cv::Scalar m1 = cv::mean(B);
-    cv::Scalar m2 = cv::mean(G);
-    cv::Scalar m3 = cv::mean(R);
-    cv::Scalar k  = (m1 + m2 + m3) / 3;
-    cv::Scalar c1 = k / m1;
-    cv::Scalar c2 = k / m2;
-    cv::Scalar c3 = k / m3;
+    double m1 = cv::mean(B)[0];
+    double m2 = cv::mean(G)[0];
+    double m3 = cv::mean(R)[0];
+    double k  = (m1 + m2 + m3) / 3;
+    double c1 = k / m1;
+    double c2 = k / m2;
+    double c3 = k / m3;
     B = adjust_luminance(B, c1);
     G = adjust_luminance(G, c2);
     R = adjust_luminance(R, c3);

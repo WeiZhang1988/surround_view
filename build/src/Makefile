@@ -56,6 +56,30 @@ CMAKE_BINARY_DIR = /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/build
 #=============================================================================
 # Targets provided globally by CMake.
 
+# Special rule for the target install/strip
+install/strip: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
+	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip
+
+# Special rule for the target install/strip
+install/strip/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
+	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip/fast
+
+# Special rule for the target install/local
+install/local: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local
+
+# Special rule for the target install/local
+install/local/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local/fast
+
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake cache editor..."
@@ -66,6 +90,28 @@ edit_cache:
 edit_cache/fast: edit_cache
 
 .PHONY : edit_cache/fast
+
+# Special rule for the target install
+install: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	/usr/bin/cmake -P cmake_install.cmake
+.PHONY : install
+
+# Special rule for the target install
+install/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	/usr/bin/cmake -P cmake_install.cmake
+.PHONY : install/fast
+
+# Special rule for the target list_install_components
+list_install_components:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
+.PHONY : list_install_components
+
+# Special rule for the target list_install_components
+list_install_components/fast: list_install_components
+
+.PHONY : list_install_components/fast
 
 # Special rule for the target rebuild_cache
 rebuild_cache:
@@ -125,32 +171,32 @@ svs/fast:
 	cd /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/build && $(MAKE) -f src/CMakeFiles/svs.dir/build.make src/CMakeFiles/svs.dir/build
 .PHONY : svs/fast
 
-test.o: test.cpp.o
+svs.o: svs.cpp.o
 
-.PHONY : test.o
+.PHONY : svs.o
 
 # target to build an object file
-test.cpp.o:
-	cd /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/build && $(MAKE) -f src/CMakeFiles/svs.dir/build.make src/CMakeFiles/svs.dir/test.cpp.o
-.PHONY : test.cpp.o
+svs.cpp.o:
+	cd /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/build && $(MAKE) -f src/CMakeFiles/svs.dir/build.make src/CMakeFiles/svs.dir/svs.cpp.o
+.PHONY : svs.cpp.o
 
-test.i: test.cpp.i
+svs.i: svs.cpp.i
 
-.PHONY : test.i
+.PHONY : svs.i
 
 # target to preprocess a source file
-test.cpp.i:
-	cd /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/build && $(MAKE) -f src/CMakeFiles/svs.dir/build.make src/CMakeFiles/svs.dir/test.cpp.i
-.PHONY : test.cpp.i
+svs.cpp.i:
+	cd /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/build && $(MAKE) -f src/CMakeFiles/svs.dir/build.make src/CMakeFiles/svs.dir/svs.cpp.i
+.PHONY : svs.cpp.i
 
-test.s: test.cpp.s
+svs.s: svs.cpp.s
 
-.PHONY : test.s
+.PHONY : svs.s
 
 # target to generate assembly for a file
-test.cpp.s:
-	cd /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/build && $(MAKE) -f src/CMakeFiles/svs.dir/build.make src/CMakeFiles/svs.dir/test.cpp.s
-.PHONY : test.cpp.s
+svs.cpp.s:
+	cd /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/build && $(MAKE) -f src/CMakeFiles/svs.dir/build.make src/CMakeFiles/svs.dir/svs.cpp.s
+.PHONY : svs.cpp.s
 
 # Help Target
 help:
@@ -158,12 +204,16 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
+	@echo "... install/strip"
+	@echo "... install/local"
 	@echo "... edit_cache"
+	@echo "... install"
+	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... svs"
-	@echo "... test.o"
-	@echo "... test.i"
-	@echo "... test.s"
+	@echo "... svs.o"
+	@echo "... svs.i"
+	@echo "... svs.s"
 .PHONY : help
 
 
