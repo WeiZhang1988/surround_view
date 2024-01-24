@@ -44,9 +44,9 @@ class CameraModel {
     new_camera_matrix.at<float>(1,1) *= scale_xy_.at<float>(1);
     new_camera_matrix.at<float>(0,2) += shift_xy_.at<float>(0);
     new_camera_matrix.at<float>(1,2) += shift_xy_.at<float>(1);
-    cv::fisheye::initUndistortRectifyMap(camera_matrix_, dist_coeffs_, cv::Mat::eye(3,3,CV_32F),new_camera_matrix, resolution_, CV_16SC2, undistort_map_x_,undistort_map_y_);
+    cv::fisheye::initUndistortRectifyMap(camera_matrix_, dist_coeffs_, cv::Mat::eye(3,3,CV_64F),new_camera_matrix, resolution_, CV_16SC2, undistort_map_x_,undistort_map_y_);
   }
-  void set_scale_and_shift(cv::Mat scale_xy = cv::Mat{1.0f,1.0f}, cv::Mat shift_xy = cv::Mat{0,0}) {
+  void set_scale_and_shift(cv::Mat scale_xy = cv::Mat{1.0,1.0}, cv::Mat shift_xy = cv::Mat{0,0}) {
     scale_xy_ = scale_xy.clone();
     shift_xy_ = shift_xy.clone();
     update_distort_maps();

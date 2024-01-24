@@ -9,22 +9,22 @@ class utils{
   public:
   cv::Mat convert_binary_to_bool(cv::Mat _mask) {
     cv::Mat tmp;
-    _mask.convertTo(tmp, CV_32F);
+    _mask.convertTo(tmp, CV_64F);
     cv::Mat result = _mask / 255.0;
     result.convertTo(result, CV_8U);
     return result.clone();
   }
-  float get_mean_statistics(cv::Mat _gary, cv::Mat _mask) {
-    return float(cv::sum(_gary.clone().mul(_mask.clone()))[0]);
+  double get_mean_statistics(cv::Mat _gary, cv::Mat _mask) {
+    return double(cv::sum(_gary.clone().mul(_mask.clone()))[0]);
   }
-  float mean_luminance_ratio(cv::Mat _grayA, cv::Mat _grayB, cv::Mat _mask) {
-    return float(get_mean_statistics(_grayA, _mask)) / float(get_mean_statistics(_grayB, _mask));
+  double mean_luminance_ratio(cv::Mat _grayA, cv::Mat _grayB, cv::Mat _mask) {
+    return double(get_mean_statistics(_grayA, _mask)) / double(get_mean_statistics(_grayB, _mask));
   }
-  cv::Mat adjust_luminance(cv::Mat _gray, float _factor) {
+  cv::Mat adjust_luminance(cv::Mat _gray, double _factor) {
     cv::Mat tmp;
-    _gray.convertTo(tmp, CV_32F);
+    _gray.convertTo(tmp, CV_64F);
     cv::Mat result;
-    result = cv::min(tmp * _factor, 255.0f);
+    result = cv::min(tmp * _factor, 255.0);
     result.convertTo(result, CV_8U);
     return result;
   }
@@ -62,7 +62,7 @@ class utils{
     cv::bitwise_and(_imB.clone(),_imB.clone(),imB_diff,overlapMaskInv);
     polyA = get_outmost_polygon_boundary(imA_diff.clone());
     polyB = get_outmost_polygon_boundary(imB_diff.clone());
-    get_mask(_imA.clone()).convertTo(_out_G, CV_32F);
+    get_mask(_imA.clone()).convertTo(_out_G, CV_64F);
     _out_G /= 255.0;
     std::vector<cv::Point> indices; 
     cv::findNonZero(_out_overlapMask==255, indices);
@@ -78,7 +78,6 @@ class utils{
   }
   cv::Mat make_white_balance(cv::Mat _image) {
     std::vector<cv::Mat> channels;
-    std::cout<<"_image "<<_image.type()<<std::endl;
     cv::split(_image.clone(), channels);
     cv::Mat B = channels[0].clone();
     cv::Mat G = channels[1].clone();

@@ -69,8 +69,8 @@ class BirdView : public BaseThread {
   void load_weights_and_masks(std::string _weights_image, std::string _masks_iamge) {
     cv::Mat GMat = cv::imread(_weights_image, cv::IMREAD_UNCHANGED);
     cv::cvtColor(GMat, GMat, cv::COLOR_BGRA2RGBA);
-    GMat.convertTo(GMat,CV_32F);
-    GMat = GMat / 255.0f;
+    GMat.convertTo(GMat,CV_64F);
+    GMat = GMat / 255.0;
     cv::Mat result;
     vec_weights_.clear();
     std::vector<cv::Mat> channels(3);
@@ -88,11 +88,10 @@ class BirdView : public BaseThread {
   }
   cv::Mat merge(cv::Mat _imA, cv::Mat _imB, int k) {
     cv::Mat tmpA, tmpB, result;
-    _imA.convertTo(tmpA, CV_32F);
-    _imB.convertTo(tmpB, CV_32F);
+    _imA.convertTo(tmpA, CV_64F);
+    _imB.convertTo(tmpB, CV_64F);
     result = tmpA.mul(vec_weights_[k].clone()) + tmpB.mul(1 - vec_weights_[k].clone());
     result.convertTo(result, CV_8U);
-    std::cout<<"result "<<result.type();
     return result.clone();
   }
   void stitch_all_parts() {
@@ -100,27 +99,23 @@ class BirdView : public BaseThread {
     cv::Mat back  = vec_images_[1].clone();
     cv::Mat left  = vec_images_[2].clone();
     cv::Mat right = vec_images_[3].clone();
-    cv::imshow("front",front);
-    cv::imshow("back",back);
-    cv::imshow("left",left);
-    cv::imshow("right",right);
     FM(front).copyTo(F());
     BM(back).copyTo(B());
     LM(left).copyTo(L());
     RM(right).copyTo(R());
-    // merge(FI(front), LI(left), 0).copyTo(FL());
-    // merge(FII(front), RII(right), 1).copyTo(FR());
-    // merge(BIII(back), LIII(left), 2).copyTo(BL());
-    // merge(BIV(back), RIV(right), 3).copyTo(BR());
+    merge(FI(front), LI(left), 0).copyTo(FL());
+    merge(FII(front), RII(right), 1).copyTo(FR());
+    merge(BIII(back), LIII(left), 2).copyTo(BL());
+    merge(BIV(back), RIV(right), 3).copyTo(BR());
   }
   void copy_car_image() {
     car_image_.copyTo(C());
   }
   float tune(float _x) {
-    if (_x > 1.0f) {
-      return std::exp((1.0f - _x) * 0.5f);
+    if (_x > 1.0) {
+      return std::exp((1.0 - _x) * 0.5);
     } else {
-      return std::exp((1.0f - _x) * 0.8f);
+      return std::exp((1.0 - _x) * 0.8);
     }
   }
   void make_luminance_balance() {
@@ -237,13 +232,13 @@ class BirdView : public BaseThread {
     cv::merge(std::vector<cv::Mat>{G2,G2,G2},tmp2);
     cv::merge(std::vector<cv::Mat>{G3,G3,G3},tmp3);
     vec_weights_ = std::vector<cv::Mat>{tmp0,tmp1,tmp2,tmp3}; 
-    tmp0 = M0 / 255.0f;
+    tmp0 = M0 / 255.0;
     tmp0.convertTo(tmp0, CV_8U);
-    tmp1 = M1 / 255.0f;
+    tmp1 = M1 / 255.0;
     tmp1.convertTo(tmp1, CV_8U);
-    tmp2 = M2 / 255.0f;
+    tmp2 = M2 / 255.0;
     tmp2.convertTo(tmp2, CV_8U);
-    tmp3 = M3 / 255.0f;
+    tmp3 = M3 / 255.0;
     tmp3.convertTo(tmp3, CV_8U);
     vec_masks_ = std::vector<cv::Mat>{tmp0,tmp1,tmp2,tmp3}; 
     cv::merge(std::vector<cv::Mat>{G0,G1,G2,G3},_out_G);   
@@ -318,7 +313,7 @@ class BirdView : public BaseThread {
   std::shared_ptr<ProjectedImageBufferManager> sptr_proc_buffer_manager_ = std::shared_ptr<ProjectedImageBufferManager>(nullptr);
   cv::Mat car_image_ = static_settings.car_image.clone();
   cv::Mat image_ = cv::Mat::zeros(static_settings.total_h, static_settings.total_w,CV_8UC3);
-  std::vector<cv::Mat> vec_images_, vec_weights_, vec_masks_; //dtype CV_8U, CV_32F, CV_8U
+  std::vector<cv::Mat> vec_images_, vec_weights_, vec_masks_; //dtype CV_8U, CV_64F, CV_8U
   cv::Mat F_, B_, L_, R_, FL_, FR_, BL_, BR_, C_;
 };
 } //namespace SVS

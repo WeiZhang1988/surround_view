@@ -46,7 +46,6 @@ int main(){
   sptr_birdview->make_white_balance();
   sptr_birdview->copy_car_image();
   int ret = display_image("BirdView Result", sptr_birdview->get_image());
-  std::cout<<"ret "<<ret<<std::endl;
   if (ret > 0){
     cv::imwrite("weights.png",Gmat * 255);
     cv::imwrite("masks.png",Mmat);
