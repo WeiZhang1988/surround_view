@@ -8,5 +8,3 @@
 /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/exe/data/yamls/right.yaml
 /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/exe/data/yamls/back.yaml
 /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/exe/data/yamls/left.yaml
-/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/exe/data/yamls/masks.png
-/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/exe/data/yamls/weights.png

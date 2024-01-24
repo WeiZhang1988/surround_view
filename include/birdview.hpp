@@ -99,6 +99,7 @@ class BirdView : public BaseThread {
     cv::Mat back  = vec_images_[1].clone();
     cv::Mat left  = vec_images_[2].clone();
     cv::Mat right = vec_images_[3].clone();
+    std::cout<<"front "<<front.type()<<std::endl;
     FM(front).copyTo(F());
     BM(back).copyTo(B());
     LM(left).copyTo(L());
@@ -242,7 +243,7 @@ class BirdView : public BaseThread {
     tmp3.convertTo(tmp3, CV_8U);
     vec_masks_ = std::vector<cv::Mat>{tmp0,tmp1,tmp2,tmp3}; 
     cv::merge(std::vector<cv::Mat>{G0,G1,G2,G3},_out_G);   
-    cv::merge(std::vector<cv::Mat>{M0,M1,M2,M3},_out_M);    
+    cv::merge(std::vector<cv::Mat>{M0,M1,M2,M3},_out_M); 
   }
   void make_white_balance() {
     image_ = static_utils.make_white_balance(image_.clone());
