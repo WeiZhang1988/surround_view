@@ -51,10 +51,10 @@ class utils{
       return fabs( cv::contourArea(cv::Mat(contour1)) ) > fabs( cv::contourArea(cv::Mat(contour2)) );
     });
     cv::Mat polygon;
-    cv::approxPolyDP(cv::Mat(contours[0]),polygon,cv::arcLength(cv::Mat(contours[0]),true),true);
+    cv::approxPolyDP(cv::Mat(contours[0]),polygon,0.009 * cv::arcLength(cv::Mat(contours[0]),true),true);
     return polygon.clone();
   }
-  void get_weight_mask_matrix(cv::Mat _imA, cv::Mat _imB, cv::Mat &_out_G, cv::Mat &_out_overlapMask, int _dist_threshold = 5) {
+  void get_weight_mask_matrix(cv::Mat _imA, cv::Mat _imB, cv::Mat &_out_G, cv::Mat &_out_overlapMask, double _dist_threshold = 5.0) {
     _out_overlapMask = get_overlap_region_mask(_imA.clone(),_imB.clone());
     cv::Mat overlapMaskInv, imA_diff, imB_diff, polyA, polyB;
     cv::bitwise_not(_out_overlapMask.clone(),overlapMaskInv);

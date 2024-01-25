@@ -90,7 +90,7 @@ class BirdView : public BaseThread {
     cv::Mat tmpA, tmpB, result;
     _imA.convertTo(tmpA, CV_64F);
     _imB.convertTo(tmpB, CV_64F);
-    result = tmpA.mul(vec_weights_[k].clone()) + tmpB.mul(1 - vec_weights_[k].clone());
+    result = tmpA.mul(vec_weights_[k].clone()) + tmpB.mul(cv::Scalar::all(1.0) - vec_weights_[k].clone());
     result.convertTo(result, CV_8U);
     return result.clone();
   }
@@ -99,7 +99,6 @@ class BirdView : public BaseThread {
     cv::Mat back  = vec_images_[1].clone();
     cv::Mat left  = vec_images_[2].clone();
     cv::Mat right = vec_images_[3].clone();
-    std::cout<<"front "<<front.type()<<std::endl;
     FM(front).copyTo(F());
     BM(back).copyTo(B());
     LM(left).copyTo(L());
@@ -233,14 +232,10 @@ class BirdView : public BaseThread {
     cv::merge(std::vector<cv::Mat>{G2,G2,G2},tmp2);
     cv::merge(std::vector<cv::Mat>{G3,G3,G3},tmp3);
     vec_weights_ = std::vector<cv::Mat>{tmp0,tmp1,tmp2,tmp3}; 
-    tmp0 = M0 / 255.0;
-    tmp0.convertTo(tmp0, CV_8U);
-    tmp1 = M1 / 255.0;
-    tmp1.convertTo(tmp1, CV_8U);
-    tmp2 = M2 / 255.0;
-    tmp2.convertTo(tmp2, CV_8U);
-    tmp3 = M3 / 255.0;
-    tmp3.convertTo(tmp3, CV_8U);
+    M0.convertTo(M0,CV_64F); tmp0 = M0 / 255.0; tmp0.convertTo(tmp0, CV_8U);
+    M1.convertTo(M1,CV_64F); tmp1 = M1 / 255.0; tmp1.convertTo(tmp1, CV_8U);
+    M2.convertTo(M2,CV_64F); tmp2 = M2 / 255.0; tmp2.convertTo(tmp2, CV_8U);
+    M3.convertTo(M3,CV_64F); tmp3 = M3 / 255.0; tmp3.convertTo(tmp3, CV_8U);
     vec_masks_ = std::vector<cv::Mat>{tmp0,tmp1,tmp2,tmp3}; 
     cv::merge(std::vector<cv::Mat>{G0,G1,G2,G3},_out_G);   
     cv::merge(std::vector<cv::Mat>{M0,M1,M2,M3},_out_M); 
