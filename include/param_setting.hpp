@@ -12,6 +12,8 @@ class Settings{
   Settings() {
     cv::resize(car_image, car_image, cv::Size(xr - xl, yb - yt), 0, 0, cv::INTER_LINEAR);
   }
+  cv::Mat scale{1.0,1.0};
+  cv::Mat shift{0.0,0.0};
   std::vector<std::string> camera_names{"front", "back", "left", "right"};
   int shift_w{300};
   int shift_h{300};
@@ -28,7 +30,7 @@ class Settings{
     {"back",{total_w,yt}},
     {"left",{total_h,xl}},
     {"right",{total_h,xl}}};
-  std::map<std::string,std::vector<std::pair<int,int>>> project_keypoints{
+  std::map<std::string,std::vector<cv::Point>> project_keypoints{
     {"front",{{shift_w + 120, shift_h},{shift_w + 480, shift_h},{shift_w + 120, shift_h + 160},{shift_w + 480, shift_h + 160}}},
     {"back", {{shift_w + 120, shift_h},{shift_w + 480, shift_h},{shift_w + 120, shift_h + 160},{shift_w + 480, shift_h + 160}}},
     {"left", {{shift_h + 280, shift_w},{shift_h + 840, shift_w},{shift_h + 280, shift_w + 160},{shift_h + 840, shift_w + 160}}},

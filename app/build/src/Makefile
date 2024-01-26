@@ -157,6 +157,21 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
+src/CMakeFiles/run_get_projection_maps.dir/rule:
+	cd /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/build && $(MAKE) -f CMakeFiles/Makefile2 src/CMakeFiles/run_get_projection_maps.dir/rule
+.PHONY : src/CMakeFiles/run_get_projection_maps.dir/rule
+
+# Convenience name for target.
+run_get_projection_maps: src/CMakeFiles/run_get_projection_maps.dir/rule
+
+.PHONY : run_get_projection_maps
+
+# fast build rule for target.
+run_get_projection_maps/fast:
+	cd /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/build && $(MAKE) -f src/CMakeFiles/run_get_projection_maps.dir/build.make src/CMakeFiles/run_get_projection_maps.dir/build
+.PHONY : run_get_projection_maps/fast
+
+# Convenience name for target.
 src/CMakeFiles/run_get_weight_matrices.dir/rule:
 	cd /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/build && $(MAKE) -f CMakeFiles/Makefile2 src/CMakeFiles/run_get_weight_matrices.dir/rule
 .PHONY : src/CMakeFiles/run_get_weight_matrices.dir/rule
@@ -170,6 +185,33 @@ run_get_weight_matrices: src/CMakeFiles/run_get_weight_matrices.dir/rule
 run_get_weight_matrices/fast:
 	cd /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/build && $(MAKE) -f src/CMakeFiles/run_get_weight_matrices.dir/build.make src/CMakeFiles/run_get_weight_matrices.dir/build
 .PHONY : run_get_weight_matrices/fast
+
+run_get_projection_maps.o: run_get_projection_maps.cpp.o
+
+.PHONY : run_get_projection_maps.o
+
+# target to build an object file
+run_get_projection_maps.cpp.o:
+	cd /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/build && $(MAKE) -f src/CMakeFiles/run_get_projection_maps.dir/build.make src/CMakeFiles/run_get_projection_maps.dir/run_get_projection_maps.cpp.o
+.PHONY : run_get_projection_maps.cpp.o
+
+run_get_projection_maps.i: run_get_projection_maps.cpp.i
+
+.PHONY : run_get_projection_maps.i
+
+# target to preprocess a source file
+run_get_projection_maps.cpp.i:
+	cd /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/build && $(MAKE) -f src/CMakeFiles/run_get_projection_maps.dir/build.make src/CMakeFiles/run_get_projection_maps.dir/run_get_projection_maps.cpp.i
+.PHONY : run_get_projection_maps.cpp.i
+
+run_get_projection_maps.s: run_get_projection_maps.cpp.s
+
+.PHONY : run_get_projection_maps.s
+
+# target to generate assembly for a file
+run_get_projection_maps.cpp.s:
+	cd /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/build && $(MAKE) -f src/CMakeFiles/run_get_projection_maps.dir/build.make src/CMakeFiles/run_get_projection_maps.dir/run_get_projection_maps.cpp.s
+.PHONY : run_get_projection_maps.cpp.s
 
 run_get_weight_matrices.o: run_get_weight_matrices.cpp.o
 
@@ -210,7 +252,11 @@ help:
 	@echo "... install"
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
+	@echo "... run_get_projection_maps"
 	@echo "... run_get_weight_matrices"
+	@echo "... run_get_projection_maps.o"
+	@echo "... run_get_projection_maps.i"
+	@echo "... run_get_projection_maps.s"
 	@echo "... run_get_weight_matrices.o"
 	@echo "... run_get_weight_matrices.i"
 	@echo "... run_get_weight_matrices.s"

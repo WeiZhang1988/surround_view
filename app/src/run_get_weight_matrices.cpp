@@ -10,11 +10,9 @@
 
 using namespace SVS;
 
-int main(){
-  std::cout<<"...";
+int main(int argc, char *argv[]){
   std::vector<std::string> names = static_settings.camera_names;
   std::vector<std::string> images, yamls;
-  std::cout<<"0...";
   for (std::string name : names) {
     images.push_back(std::string("./data/images/") + name + std::string(".png"));
     yamls.push_back(std::string("./data/yamls/") + name + std::string(".yaml"));
@@ -44,4 +42,5 @@ int main(){
     bool x = cv::imwrite("./data/weights.png",Gmat * 255);
     bool y = cv::imwrite("./data/masks.png",Mmat);
   }
+  return 0;
 }

@@ -157,6 +157,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named run_get_projection_maps
+
+# Build rule for target.
+run_get_projection_maps: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 run_get_projection_maps
+.PHONY : run_get_projection_maps
+
+# fast build rule for target.
+run_get_projection_maps/fast:
+	$(MAKE) -f src/CMakeFiles/run_get_projection_maps.dir/build.make src/CMakeFiles/run_get_projection_maps.dir/build
+.PHONY : run_get_projection_maps/fast
+
+#=============================================================================
 # Target rules for targets named run_get_weight_matrices
 
 # Build rule for target.
@@ -181,6 +194,7 @@ help:
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
+	@echo "... run_get_projection_maps"
 	@echo "... run_get_weight_matrices"
 .PHONY : help
 

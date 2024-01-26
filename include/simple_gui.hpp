@@ -70,7 +70,7 @@ class PointSelector{
       }
       int key = (cv::waitKey(1) & 0xFF);
       if (key == int('q')) {
-        return -1;
+        return false;
       }
       if (key == int('d')) {
         if (keypoints_.size() > 0) {
@@ -81,25 +81,32 @@ class PointSelector{
         }
       }
       if (key == 13) {
-        return true;
+        if (keypoints_.size() == 4) {
+          return true;
+        } else {
+          std::cout<<"must click exactly 4 points"<<std::endl;
+          return false;
+        }
       }
     }
   }
   cv::Mat create_mask_from_pixels(std::vector<cv::Point> _pixels,cv::Size _image_size) {
     std::vector<cv::Point> hull;
-    cv::convexHull(_pixels,hull);
-    cv::Mat mask = cv::Mat::zeros(_image_size,CV_8U);
-    cv::fillConvexPoly(mask,hull,cv::Scalar(1),8,0);
-    mask = static_utils.convert_binary_to_bool(mask);
+    cv::convexHull(cv::Mat(_pixels),hull);
+    cv::Mat mask = cv::Mat::zeros(_image_size,CV_8UC1);
+    cv::fillConvexPoly(mask,cv::Mat(hull),cv::Scalar(1),cv::LINE_8,0);
     return mask.clone();
   }
   cv::Mat draw_mask_on_image(cv::Mat _image, cv::Mat _mask) {
-    cv::Mat new_image = cv::Mat::zeros(_image.cols,_image.rows,_image.channels());
+    cv::Mat new_image = cv::Mat::zeros(_image.size(),_image.type());
     new_image(cv::Range::all(),cv::Range::all()) = FILL_COLOR_;
-    cv::Mat new_mask;
+    cv::Mat new_mask = cv::Mat::zeros(_image.size(),_image.type());
     cv::bitwise_and(new_image,new_image,new_mask,_mask);
     cv::addWeighted(_image, 1.0, new_mask, 0.5, 0.0, _image);
     return _image.clone();
+  }
+  std::vector<cv::Point> get_keypoints() {
+    return keypoints_;
   }
   protected:
   cv::Scalar POINT_COLOR_{0,0,255};
