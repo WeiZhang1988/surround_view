@@ -21,14 +21,7 @@ class CameraProcessingThread : public BaseThread {
     if (sptr_proc_buffer_manager_ == std::shared_ptr<ProjectedImageBufferManager>(nullptr)){
       throw std::runtime_error("This thread has not been binded to any buffer manager yet");
     }
-    while (true) {
-      {
-        std::unique_lock<std::mutex> lock{stop_mutex_};
-        if (stopped_) {
-          stopped_ = false;
-          break;
-        } 
-      }
+    while (!stopped_) {
       processing_time_ = clock_.elapsed();
       clock_.start();
       cv::Mat und_image, pro_image, flip_image;
@@ -45,6 +38,7 @@ class CameraProcessingThread : public BaseThread {
       stat_data_.frames_processed_count_ += 1;
       //update_statistics_gui.emit(self.stat_data)
     }
+    stopped_ = false;
   }
   protected:
   std::shared_ptr<MultiBufferManager> sptr_capture_buffer_manager_       = std::shared_ptr<MultiBufferManager>(nullptr);

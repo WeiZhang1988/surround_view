@@ -8,6 +8,7 @@
 #include <memory>
 #include <opencv2/opencv.hpp>
 #include "semaphore.hpp"
+#include "structures.hpp"
 #include "param_setting.hpp"
 
 namespace SVS{
@@ -105,7 +106,7 @@ class MultiBufferManager : public std::enable_shared_from_this<MultiBufferManage
   }
   template<typename ThreadType>
   void bind_thread(std::shared_ptr<ThreadType> _sptr_thread, int _buffer_size, bool _sync=true) {
-    _sptr_thread->buffer_manager = shared_from_this();
+    _sptr_thread->buffer_manager(shared_from_this());
   }
   void add(int _device_id, ImageFrame _image_frame, bool _drop_if_full) {
     buffer_maps_[_device_id]->add(_image_frame, _drop_if_full);

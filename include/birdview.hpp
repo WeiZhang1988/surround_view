@@ -247,14 +247,7 @@ class BirdView : public BaseThread {
     if (sptr_proc_buffer_manager_ == std::shared_ptr<ProjectedImageBufferManager>(nullptr)) {
       std::runtime_error("This thread requires a buffer of projected images to run");
     }
-    while(true) {
-      {
-        std::unique_lock<std::mutex> lock(stop_mutex_);
-        if (stopped_) {
-          stopped_ = false;
-          break;
-        }
-      }
+    while(!stopped_) {
       processing_time_ = clock_.elapsed();
       clock_.start();
       {
@@ -275,6 +268,7 @@ class BirdView : public BaseThread {
       stat_data_.frames_processed_count_ += 1;
       //update_statistics_gui.emit(self.stat_data)
     }
+    stopped_ = false;
   }
   protected:
   cv::Mat FL() const {

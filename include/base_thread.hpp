@@ -6,21 +6,11 @@
 #include <queue>
 #include <chrono>
 #include <thread>
+#include <memory>
+#include <atomic>
 #include "structures.hpp"
 
 namespace SVS{
-class VirtualThread {
-  public:
-  void start() {
-    std::thread t([this]() -> void {
-      run();
-    });
-    t.detach();
-  }
-  protected:
-  virtual void run() = 0;
-};
-
 class Timer {
   public:
   void start() {
@@ -51,8 +41,16 @@ class Timer {
 
 class BaseThread {
   public:
+  void start() {
+    stopped_ = false;
+    std::shared_ptr<std::thread> sptr_thread = std::make_shared<std::thread>([this]() -> void {
+      run();
+    });
+    if (sptr_thread->joinable()) {
+      sptr_thread->join();
+	  }
+  }
   void stop() {
-    std::unique_lock<std::mutex> lock(stop_mutex_);
     stopped_ = true;
   }
   void update_fps(double dt) {
@@ -73,8 +71,9 @@ class BaseThread {
     }
   }
   protected:
+  virtual void run() = 0;
   const int FPS_STAT_QUEUE_LENGTH_ = 32;
-  bool stopped_ = false;
+  std::atomic<bool> stopped_{false};
   std::mutex stop_mutex_;
   Timer clock_ = Timer();
   std::queue<double> fps_;

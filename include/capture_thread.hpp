@@ -68,18 +68,14 @@ class CaptureThread : public BaseThread {
   bool is_camera_connected() {
     return cap_.isOpened();
   }
+  void buffer_manager(std::shared_ptr<MultiBufferManager> _sptr_buffer_manager) {
+    sptr_buffer_manager_ = _sptr_buffer_manager;
+  }
   void run() {
     if (sptr_buffer_manager_ == std::shared_ptr<MultiBufferManager>(nullptr)){
       throw std::runtime_error("This thread has not been binded to any buffer manager yet");
     }
-    while (true) {
-      {
-        std::unique_lock<std::mutex> lock(stop_mutex_);
-        if (stopped_) {
-          stopped_ = false;
-          break;
-        }
-      }
+    while (!stopped_) {
       processing_time_ = clock_.elapsed();
       clock_.start();
       sptr_buffer_manager_->sync(device_id_);
@@ -93,6 +89,7 @@ class CaptureThread : public BaseThread {
         //update_statistics_gui_.emit(stat_data_);
       }
     }
+    stopped_ = false;
   }
   protected:
   cv::String gstreamer_pipeline(int _cam_id = 0, int _capture_width = 960, int _capture_height = 640, int _framerate = 60, FlipMethod _flip_method = FlipMethod::Rotation180) {
