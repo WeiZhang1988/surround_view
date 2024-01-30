@@ -94,7 +94,8 @@ class Buffer {
   std::queue<StoredDataType> queue_;
 };
 
-class MultiBufferManager : public std::enable_shared_from_this<MultiBufferManager>{
+template<typename BufferDataType, typename ThreadType>
+class MultiBufferManager : public std::enable_shared_from_this<MultiBufferManager<BufferDataType,ThreadType>>{
   public:
   MultiBufferManager(bool _do_sync = true) : do_sync_(_do_sync) {}
   void create_buffer_for_device(int _device_id, int _buffer_size, bool _sync=true) {
@@ -102,16 +103,19 @@ class MultiBufferManager : public std::enable_shared_from_this<MultiBufferManage
       std::unique_lock<decltype(mutex_)> lock{mutex_};
       sync_devices_.insert(_device_id);
     }
-    buffer_maps_[_device_id] = std::make_shared<Buffer<ImageFrame>>(_buffer_size);
+    buffer_maps_[_device_id] = std::make_shared<Buffer<BufferDataType>>(_buffer_size);
   }
-  template<typename ThreadType>
-  void bind_thread(std::shared_ptr<ThreadType> _sptr_thread, int _buffer_size, bool _sync=true) {
-    _sptr_thread->buffer_manager(shared_from_this());
+  void bind_thread(std::shared_ptr<ThreadType> _sptr_thread) {
+    _sptr_thread->buffer_manager(this->shared_from_this());
   }
-  void add(int _device_id, ImageFrame _image_frame, bool _drop_if_full) {
-    buffer_maps_[_device_id]->add(_image_frame, _drop_if_full);
+  void create_buffer_and_bind_thread(int _device_id, int _buffer_size, bool _sync, std::shared_ptr<ThreadType> _sptr_thread) {
+    create_buffer_for_device(_device_id, _buffer_size, _sync);
+    bind_thread(_sptr_thread);
   }
-  ImageFrame get (int _device_id) {
+  void add(int _device_id, BufferDataType _buffer_data, bool _drop_if_full) {
+    buffer_maps_[_device_id]->add(_buffer_data, _drop_if_full);
+  }
+  BufferDataType get (int _device_id) {
     return buffer_maps_[_device_id]->get();
   }
   void remove_device(int _device_id) {
@@ -154,13 +158,13 @@ class MultiBufferManager : public std::enable_shared_from_this<MultiBufferManage
   }
   std::string str() {
     std::string keys, devices;
-    for (const std::pair<int, std::shared_ptr<Buffer<ImageFrame>>> &item : buffer_maps_) {
+    for (const std::pair<int, std::shared_ptr<Buffer<BufferDataType>>> &item : buffer_maps_) {
       keys += (", " + std::to_string(item.first));
     }
     for (const int &item : sync_devices_) {
       devices += (", " + std::to_string(item));
     }
-    return std::string(typeid(MultiBufferManager).name()) + ":\n" + \
+    return std::string(typeid(MultiBufferManager<BufferDataType,ThreadType>).name()) + ":\n" + \
            "sync: " + std::to_string(do_sync_) + "\n" + \
            "device: " + keys + "\n" + \
            "sync enabled devices: " + devices + "\n";
@@ -170,7 +174,7 @@ class MultiBufferManager : public std::enable_shared_from_this<MultiBufferManage
   bool do_sync_;
   std::condition_variable cv_;
   std::mutex mutex_;
-  std::map<int, std::shared_ptr<Buffer<ImageFrame>>> buffer_maps_;
+  std::map<int, std::shared_ptr<Buffer<BufferDataType>>> buffer_maps_;
   int arrived_ = 0;
 };
 

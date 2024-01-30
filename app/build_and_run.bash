@@ -11,6 +11,6 @@ cmake --install .
 
 printf "\e[1;36m----- running app -----\e[0m\n"
 cd ../exe
-#./run_get_weight_matrices
+./run_get_weight_matrices
 #./run_get_projection_maps front
-./run_calibrate_camera
+#./run_calibrate_camera

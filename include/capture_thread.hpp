@@ -68,11 +68,11 @@ class CaptureThread : public BaseThread {
   bool is_camera_connected() {
     return cap_.isOpened();
   }
-  void buffer_manager(std::shared_ptr<MultiBufferManager> _sptr_buffer_manager) {
+  void buffer_manager(std::shared_ptr<MultiBufferManager<ImageFrame,CaptureThread>> _sptr_buffer_manager) {
     sptr_buffer_manager_ = _sptr_buffer_manager;
   }
   void run() {
-    if (sptr_buffer_manager_ == std::shared_ptr<MultiBufferManager>(nullptr)){
+    if (sptr_buffer_manager_ == std::shared_ptr<MultiBufferManager<ImageFrame,CaptureThread>>(nullptr)){
       throw std::runtime_error("This thread has not been binded to any buffer manager yet");
     }
     while (!stopped_) {
@@ -109,7 +109,7 @@ class CaptureThread : public BaseThread {
   cv::Size resolution_;
   bool use_gst_;
   cv::VideoCapture cap_ = cv::VideoCapture();
-  std::shared_ptr<MultiBufferManager> sptr_buffer_manager_ = std::shared_ptr<MultiBufferManager>(nullptr);
+  std::shared_ptr<MultiBufferManager<ImageFrame,CaptureThread>> sptr_buffer_manager_ = std::shared_ptr<MultiBufferManager<ImageFrame,CaptureThread>>(nullptr);
 };
 
 } //namespace SVS

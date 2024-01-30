@@ -41,7 +41,7 @@ class CameraProcessingThread : public BaseThread {
     stopped_ = false;
   }
   protected:
-  std::shared_ptr<MultiBufferManager> sptr_capture_buffer_manager_       = std::shared_ptr<MultiBufferManager>(nullptr);
+  std::shared_ptr<MultiBufferManager<ImageFrame,CaptureThread>> sptr_capture_buffer_manager_       = std::shared_ptr<MultiBufferManager<ImageFrame,CaptureThread>>(nullptr);
   std::shared_ptr<ProjectedImageBufferManager> sptr_proc_buffer_manager_ = std::shared_ptr<ProjectedImageBufferManager>(nullptr);
   int device_id_;
   std::shared_ptr<CameraModel> sptr_camera_model_;

@@ -41,14 +41,16 @@ class Timer {
 
 class BaseThread {
   public:
+  ~BaseThread() {
+    if (sptr_thread_ != std::shared_ptr<void>(nullptr) && sptr_thread_->joinable()) {
+      sptr_thread_->join();
+    }
+  }
   void start() {
     stopped_ = false;
-    std::shared_ptr<std::thread> sptr_thread = std::make_shared<std::thread>([this]() -> void {
+    sptr_thread_ = std::make_shared<std::thread>([this]() -> void {
       run();
     });
-    if (sptr_thread->joinable()) {
-      sptr_thread->join();
-	  }
   }
   void stop() {
     stopped_ = true;
@@ -72,6 +74,7 @@ class BaseThread {
   }
   protected:
   virtual void run() = 0;
+  std::shared_ptr<std::thread> sptr_thread_ = std::shared_ptr<std::thread>(nullptr);
   const int FPS_STAT_QUEUE_LENGTH_ = 32;
   std::atomic<bool> stopped_{false};
   std::mutex stop_mutex_;

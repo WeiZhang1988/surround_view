@@ -37,12 +37,63 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
   set(CMAKE_CROSSCOMPILING "FALSE")
 endif()
 
-# Set default install directory permissions.
-if(NOT DEFINED CMAKE_OBJDUMP)
-  set(CMAKE_OBJDUMP "/usr/bin/objdump")
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  if(EXISTS "$ENV{DESTDIR}/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/exe/run_get_weight_matrices" AND
+     NOT IS_SYMLINK "$ENV{DESTDIR}/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/exe/run_get_weight_matrices")
+    file(RPATH_CHECK
+         FILE "$ENV{DESTDIR}/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/exe/run_get_weight_matrices"
+         RPATH "/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/../lib")
+  endif()
+  list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
+   "/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/exe/run_get_weight_matrices")
+  if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
+    message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
+  endif()
+  if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
+    message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
+  endif()
+file(INSTALL DESTINATION "/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/exe" TYPE EXECUTABLE FILES "/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/build/src/run_get_weight_matrices")
+  if(EXISTS "$ENV{DESTDIR}/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/exe/run_get_weight_matrices" AND
+     NOT IS_SYMLINK "$ENV{DESTDIR}/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/exe/run_get_weight_matrices")
+    file(RPATH_CHANGE
+         FILE "$ENV{DESTDIR}/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/exe/run_get_weight_matrices"
+         OLD_RPATH "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"
+         NEW_RPATH "/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/../lib")
+    if(CMAKE_INSTALL_DO_STRIP)
+      execute_process(COMMAND "/usr/bin/strip" "$ENV{DESTDIR}/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/exe/run_get_weight_matrices")
+    endif()
+  endif()
 endif()
 
-if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  if(EXISTS "$ENV{DESTDIR}/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/exe/run_get_projection_maps" AND
+     NOT IS_SYMLINK "$ENV{DESTDIR}/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/exe/run_get_projection_maps")
+    file(RPATH_CHECK
+         FILE "$ENV{DESTDIR}/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/exe/run_get_projection_maps"
+         RPATH "/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/../lib")
+  endif()
+  list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
+   "/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/exe/run_get_projection_maps")
+  if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
+    message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
+  endif()
+  if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
+    message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
+  endif()
+file(INSTALL DESTINATION "/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/exe" TYPE EXECUTABLE FILES "/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/build/src/run_get_projection_maps")
+  if(EXISTS "$ENV{DESTDIR}/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/exe/run_get_projection_maps" AND
+     NOT IS_SYMLINK "$ENV{DESTDIR}/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/exe/run_get_projection_maps")
+    file(RPATH_CHANGE
+         FILE "$ENV{DESTDIR}/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/exe/run_get_projection_maps"
+         OLD_RPATH "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"
+         NEW_RPATH "/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/../lib")
+    if(CMAKE_INSTALL_DO_STRIP)
+      execute_process(COMMAND "/usr/bin/strip" "$ENV{DESTDIR}/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/exe/run_get_projection_maps")
+    endif()
+  endif()
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   if(EXISTS "$ENV{DESTDIR}/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/exe/run_calibrate_camera" AND
      NOT IS_SYMLINK "$ENV{DESTDIR}/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/exe/run_calibrate_camera")
     file(RPATH_CHECK
@@ -57,7 +108,7 @@ if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-  file(INSTALL DESTINATION "/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/exe" TYPE EXECUTABLE FILES "/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/build/src/run_calibrate_camera")
+file(INSTALL DESTINATION "/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/exe" TYPE EXECUTABLE FILES "/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/build/src/run_calibrate_camera")
   if(EXISTS "$ENV{DESTDIR}/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/exe/run_calibrate_camera" AND
      NOT IS_SYMLINK "$ENV{DESTDIR}/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/exe/run_calibrate_camera")
     file(RPATH_CHANGE
