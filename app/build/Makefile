@@ -157,6 +157,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named test_cameras
+
+# Build rule for target.
+test_cameras: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 test_cameras
+.PHONY : test_cameras
+
+# fast build rule for target.
+test_cameras/fast:
+	$(MAKE) -f src/CMakeFiles/test_cameras.dir/build.make src/CMakeFiles/test_cameras.dir/build
+.PHONY : test_cameras/fast
+
+#=============================================================================
 # Target rules for targets named run_calibrate_camera
 
 # Build rule for target.
@@ -207,6 +220,7 @@ help:
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
+	@echo "... test_cameras"
 	@echo "... run_calibrate_camera"
 	@echo "... run_get_projection_maps"
 	@echo "... run_get_weight_matrices"

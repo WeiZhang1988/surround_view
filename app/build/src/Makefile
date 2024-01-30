@@ -157,6 +157,21 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
+src/CMakeFiles/test_cameras.dir/rule:
+	cd /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/build && $(MAKE) -f CMakeFiles/Makefile2 src/CMakeFiles/test_cameras.dir/rule
+.PHONY : src/CMakeFiles/test_cameras.dir/rule
+
+# Convenience name for target.
+test_cameras: src/CMakeFiles/test_cameras.dir/rule
+
+.PHONY : test_cameras
+
+# fast build rule for target.
+test_cameras/fast:
+	cd /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/build && $(MAKE) -f src/CMakeFiles/test_cameras.dir/build.make src/CMakeFiles/test_cameras.dir/build
+.PHONY : test_cameras/fast
+
+# Convenience name for target.
 src/CMakeFiles/run_calibrate_camera.dir/rule:
 	cd /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/build && $(MAKE) -f CMakeFiles/Makefile2 src/CMakeFiles/run_calibrate_camera.dir/rule
 .PHONY : src/CMakeFiles/run_calibrate_camera.dir/rule
@@ -282,6 +297,33 @@ run_get_weight_matrices.cpp.s:
 	cd /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/build && $(MAKE) -f src/CMakeFiles/run_get_weight_matrices.dir/build.make src/CMakeFiles/run_get_weight_matrices.dir/run_get_weight_matrices.cpp.s
 .PHONY : run_get_weight_matrices.cpp.s
 
+test_cameras.o: test_cameras.cpp.o
+
+.PHONY : test_cameras.o
+
+# target to build an object file
+test_cameras.cpp.o:
+	cd /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/build && $(MAKE) -f src/CMakeFiles/test_cameras.dir/build.make src/CMakeFiles/test_cameras.dir/test_cameras.cpp.o
+.PHONY : test_cameras.cpp.o
+
+test_cameras.i: test_cameras.cpp.i
+
+.PHONY : test_cameras.i
+
+# target to preprocess a source file
+test_cameras.cpp.i:
+	cd /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/build && $(MAKE) -f src/CMakeFiles/test_cameras.dir/build.make src/CMakeFiles/test_cameras.dir/test_cameras.cpp.i
+.PHONY : test_cameras.cpp.i
+
+test_cameras.s: test_cameras.cpp.s
+
+.PHONY : test_cameras.s
+
+# target to generate assembly for a file
+test_cameras.cpp.s:
+	cd /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/build && $(MAKE) -f src/CMakeFiles/test_cameras.dir/build.make src/CMakeFiles/test_cameras.dir/test_cameras.cpp.s
+.PHONY : test_cameras.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -291,6 +333,7 @@ help:
 	@echo "... install/strip"
 	@echo "... install/local"
 	@echo "... edit_cache"
+	@echo "... test_cameras"
 	@echo "... run_calibrate_camera"
 	@echo "... install"
 	@echo "... list_install_components"
@@ -306,6 +349,9 @@ help:
 	@echo "... run_get_weight_matrices.o"
 	@echo "... run_get_weight_matrices.i"
 	@echo "... run_get_weight_matrices.s"
+	@echo "... test_cameras.o"
+	@echo "... test_cameras.i"
+	@echo "... test_cameras.s"
 .PHONY : help
 
 

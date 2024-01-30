@@ -7,6 +7,7 @@
 /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/build/src/CMakeFiles/install/strip.dir
 /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/build/src/CMakeFiles/install/local.dir
 /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/build/src/CMakeFiles/edit_cache.dir
+/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/build/src/CMakeFiles/test_cameras.dir
 /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/build/src/CMakeFiles/run_calibrate_camera.dir
 /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/build/src/CMakeFiles/install.dir
 /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/build/src/CMakeFiles/list_install_components.dir

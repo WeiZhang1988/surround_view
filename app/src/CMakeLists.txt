@@ -30,3 +30,12 @@ target_include_directories(run_calibrate_camera PUBLIC ${CMAKE_CURRENT_SOURCE_DI
 																			 										${OpenCV_INCLUDE_DIRS}
 																													${PROJECT_SOURCE_DIR}/../include)
 install(TARGETS run_calibrate_camera DESTINATION ${PROJECT_SOURCE_DIR}/exe)
+
+##############################################################################################
+add_executable(test_cameras test_cameras.cpp)
+target_link_libraries(test_cameras PUBLIC pthread
+																										 ${OpenCV_LIBRARIES})
+target_include_directories(test_cameras PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
+																			 										${OpenCV_INCLUDE_DIRS}
+																													${PROJECT_SOURCE_DIR}/../include)
+install(TARGETS test_cameras DESTINATION ${PROJECT_SOURCE_DIR}/exe)
