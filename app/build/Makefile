@@ -157,6 +157,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named run_live_demo
+
+# Build rule for target.
+run_live_demo: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 run_live_demo
+.PHONY : run_live_demo
+
+# fast build rule for target.
+run_live_demo/fast:
+	$(MAKE) -f src/CMakeFiles/run_live_demo.dir/build.make src/CMakeFiles/run_live_demo.dir/build
+.PHONY : run_live_demo/fast
+
+#=============================================================================
 # Target rules for targets named test_cameras
 
 # Build rule for target.
@@ -220,6 +233,7 @@ help:
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
+	@echo "... run_live_demo"
 	@echo "... test_cameras"
 	@echo "... run_calibrate_camera"
 	@echo "... run_get_projection_maps"

@@ -39,3 +39,12 @@ target_include_directories(test_cameras PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
 																			 										${OpenCV_INCLUDE_DIRS}
 																													${PROJECT_SOURCE_DIR}/../include)
 install(TARGETS test_cameras DESTINATION ${PROJECT_SOURCE_DIR}/exe)
+
+##############################################################################################
+add_executable(run_live_demo run_live_demo.cpp)
+target_link_libraries(run_live_demo PUBLIC pthread
+																										 ${OpenCV_LIBRARIES})
+target_include_directories(run_live_demo PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
+																			 										${OpenCV_INCLUDE_DIRS}
+																													${PROJECT_SOURCE_DIR}/../include)
+install(TARGETS run_live_demo DESTINATION ${PROJECT_SOURCE_DIR}/exe)

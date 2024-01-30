@@ -243,6 +243,9 @@ class BirdView : public BaseThread {
   void make_white_balance() {
     image_ = static_utils.make_white_balance(image_.clone());
   }
+  void set_buffer_manager(std::shared_ptr<ProjectedImageBufferManager> _sptr_proc_buffer_manager) {
+    sptr_proc_buffer_manager_ = _sptr_proc_buffer_manager;
+  }
   void run() {
     if (sptr_proc_buffer_manager_ == std::shared_ptr<ProjectedImageBufferManager>(nullptr)) {
       std::runtime_error("This thread requires a buffer of projected images to run");

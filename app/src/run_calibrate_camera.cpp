@@ -52,7 +52,7 @@ int main(int argc, char *argv[]) {
   std::vector<std::vector<cv::Point2d>> imgpoints;
   std::shared_ptr<CaptureThread> sptr_capture_thread = std::make_shared<CaptureThread>(camera_device_id, flip_method, true, cv::CAP_GSTREAMER, resolution, !no_gst);
   std::shared_ptr<MultiBufferManager<ImageFrame,CaptureThread>> sptr_multi_buffer_manager = std::make_shared<MultiBufferManager<ImageFrame,CaptureThread>>();
-  sptr_multi_buffer_manager->create_buffer_and_bind_thread(camera_device_id, 8, true, sptr_capture_thread);
+  sptr_multi_buffer_manager->create_buffer_and_bind_thread(sptr_capture_thread, 8, true);
   if (sptr_capture_thread->connect_camera()) {
     sptr_capture_thread->start();
   } else {

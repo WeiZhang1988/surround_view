@@ -71,6 +71,7 @@ clean: src/clean
 # Directory level rules for directory src
 
 # Recursive "all" directory target.
+src/all: src/CMakeFiles/run_live_demo.dir/all
 src/all: src/CMakeFiles/test_cameras.dir/all
 src/all: src/CMakeFiles/run_calibrate_camera.dir/all
 src/all: src/CMakeFiles/run_get_projection_maps.dir/all
@@ -84,6 +85,7 @@ src/preinstall:
 .PHONY : src/preinstall
 
 # Recursive "clean" directory target.
+src/clean: src/CMakeFiles/run_live_demo.dir/clean
 src/clean: src/CMakeFiles/test_cameras.dir/clean
 src/clean: src/CMakeFiles/run_calibrate_camera.dir/clean
 src/clean: src/CMakeFiles/run_get_projection_maps.dir/clean
@@ -92,13 +94,40 @@ src/clean: src/CMakeFiles/run_get_weight_matrices.dir/clean
 .PHONY : src/clean
 
 #=============================================================================
+# Target rules for target src/CMakeFiles/run_live_demo.dir
+
+# All Build rule for target.
+src/CMakeFiles/run_live_demo.dir/all:
+	$(MAKE) -f src/CMakeFiles/run_live_demo.dir/build.make src/CMakeFiles/run_live_demo.dir/depend
+	$(MAKE) -f src/CMakeFiles/run_live_demo.dir/build.make src/CMakeFiles/run_live_demo.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/build/CMakeFiles --progress-num=7,8 "Built target run_live_demo"
+.PHONY : src/CMakeFiles/run_live_demo.dir/all
+
+# Build rule for subdir invocation for target.
+src/CMakeFiles/run_live_demo.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/build/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 src/CMakeFiles/run_live_demo.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/build/CMakeFiles 0
+.PHONY : src/CMakeFiles/run_live_demo.dir/rule
+
+# Convenience name for target.
+run_live_demo: src/CMakeFiles/run_live_demo.dir/rule
+
+.PHONY : run_live_demo
+
+# clean rule for target.
+src/CMakeFiles/run_live_demo.dir/clean:
+	$(MAKE) -f src/CMakeFiles/run_live_demo.dir/build.make src/CMakeFiles/run_live_demo.dir/clean
+.PHONY : src/CMakeFiles/run_live_demo.dir/clean
+
+#=============================================================================
 # Target rules for target src/CMakeFiles/test_cameras.dir
 
 # All Build rule for target.
 src/CMakeFiles/test_cameras.dir/all:
 	$(MAKE) -f src/CMakeFiles/test_cameras.dir/build.make src/CMakeFiles/test_cameras.dir/depend
 	$(MAKE) -f src/CMakeFiles/test_cameras.dir/build.make src/CMakeFiles/test_cameras.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/build/CMakeFiles --progress-num=7,8 "Built target test_cameras"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/build/CMakeFiles --progress-num=9,10 "Built target test_cameras"
 .PHONY : src/CMakeFiles/test_cameras.dir/all
 
 # Build rule for subdir invocation for target.

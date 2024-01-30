@@ -40,6 +40,15 @@ class CameraProcessingThread : public BaseThread {
     }
     stopped_ = false;
   }
+  void set_buffer_manager(std::shared_ptr<ProjectedImageBufferManager> _sptr_buffer_manager) {
+    sptr_proc_buffer_manager_ = _sptr_buffer_manager;
+  }
+  int get_device_id() {
+    return device_id_;
+  }
+  std::shared_ptr<CameraModel> get_sptr_camera_model() {
+    return sptr_camera_model_;
+  }
   protected:
   std::shared_ptr<MultiBufferManager<ImageFrame,CaptureThread>> sptr_capture_buffer_manager_       = std::shared_ptr<MultiBufferManager<ImageFrame,CaptureThread>>(nullptr);
   std::shared_ptr<ProjectedImageBufferManager> sptr_proc_buffer_manager_ = std::shared_ptr<ProjectedImageBufferManager>(nullptr);

@@ -106,10 +106,10 @@ class MultiBufferManager : public std::enable_shared_from_this<MultiBufferManage
     buffer_maps_[_device_id] = std::make_shared<Buffer<BufferDataType>>(_buffer_size);
   }
   void bind_thread(std::shared_ptr<ThreadType> _sptr_thread) {
-    _sptr_thread->buffer_manager(this->shared_from_this());
+    _sptr_thread->set_buffer_manager(this->shared_from_this());
   }
-  void create_buffer_and_bind_thread(int _device_id, int _buffer_size, bool _sync, std::shared_ptr<ThreadType> _sptr_thread) {
-    create_buffer_for_device(_device_id, _buffer_size, _sync);
+  void create_buffer_and_bind_thread(std::shared_ptr<ThreadType> _sptr_thread, int _buffer_size, bool _sync) {
+    create_buffer_for_device(_sptr_thread->get_device_id(), _buffer_size, _sync);
     bind_thread(_sptr_thread);
   }
   void add(int _device_id, BufferDataType _buffer_data, bool _drop_if_full) {
@@ -184,15 +184,19 @@ class ProjectedImageBufferManager : public std::enable_shared_from_this<Projecte
     sptr_buffer_ = std::make_shared<Buffer<std::map<int,cv::Mat>>>(_buffer_size);
   }
   template<typename ThreadType>
-  void bind_thread(std::shared_ptr<ThreadType> _sptr_thread) {
+  void create_and_bind_thread(std::shared_ptr<ThreadType> _sptr_thread) {
     {
       std::unique_lock<std::mutex> lock{mutex_};
-      sync_devices_.insert(_sptr_thread->device_id_);
+      sync_devices_.insert(_sptr_thread->get_device_id());
     }
-    std::string name = _sptr_thread->camera_model_.camera_name_;
+    std::string name = _sptr_thread->get_sptr_camera_model()->get_camera_name();
     cv::Size shape = static_settings.project_shapes[name];
-    current_images_[_sptr_thread->device_id] = std::make_shared<cv::Mat>(cv::Mat::zeros(shape.height,shape.width,3));
-    _sptr_thread->proc_buffer_manager_ = shared_from_this();
+    current_images_[_sptr_thread->get_device_id()] = cv::Mat::zeros(shape.height,shape.width,3);
+    _sptr_thread->set_buffer_manager(this->shared_from_this());
+  }
+  template<typename ThreadType>
+  void bind_thread(std::shared_ptr<ThreadType> _sptr_thread) {
+    _sptr_thread->set_buffer_manager(this->shared_from_this());
   }
   std::map<int,cv::Mat> get () {
     return sptr_buffer_->get();

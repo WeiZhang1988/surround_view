@@ -72,6 +72,9 @@ class BaseThread {
       fps_sum_ = 0.0;
     }
   }
+  ThreadStatisticsData get_stat_data() {
+    return stat_data_;
+  }
   protected:
   virtual void run() = 0;
   std::shared_ptr<std::thread> sptr_thread_ = std::shared_ptr<std::thread>(nullptr);

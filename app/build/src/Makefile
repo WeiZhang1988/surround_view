@@ -68,6 +68,17 @@ install/strip/fast: preinstall/fast
 	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
 .PHONY : install/strip/fast
 
+# Special rule for the target edit_cache
+edit_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake cache editor..."
+	/usr/bin/ccmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+.PHONY : edit_cache
+
+# Special rule for the target edit_cache
+edit_cache/fast: edit_cache
+
+.PHONY : edit_cache/fast
+
 # Special rule for the target install/local
 install/local: preinstall
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
@@ -79,17 +90,6 @@ install/local/fast: preinstall/fast
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
 	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
 .PHONY : install/local/fast
-
-# Special rule for the target edit_cache
-edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake cache editor..."
-	/usr/bin/ccmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
-.PHONY : edit_cache
-
-# Special rule for the target edit_cache
-edit_cache/fast: edit_cache
-
-.PHONY : edit_cache/fast
 
 # Special rule for the target install
 install: preinstall
@@ -155,6 +155,21 @@ preinstall/fast:
 depend:
 	cd /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
+
+# Convenience name for target.
+src/CMakeFiles/run_live_demo.dir/rule:
+	cd /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/build && $(MAKE) -f CMakeFiles/Makefile2 src/CMakeFiles/run_live_demo.dir/rule
+.PHONY : src/CMakeFiles/run_live_demo.dir/rule
+
+# Convenience name for target.
+run_live_demo: src/CMakeFiles/run_live_demo.dir/rule
+
+.PHONY : run_live_demo
+
+# fast build rule for target.
+run_live_demo/fast:
+	cd /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/build && $(MAKE) -f src/CMakeFiles/run_live_demo.dir/build.make src/CMakeFiles/run_live_demo.dir/build
+.PHONY : run_live_demo/fast
 
 # Convenience name for target.
 src/CMakeFiles/test_cameras.dir/rule:
@@ -297,6 +312,33 @@ run_get_weight_matrices.cpp.s:
 	cd /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/build && $(MAKE) -f src/CMakeFiles/run_get_weight_matrices.dir/build.make src/CMakeFiles/run_get_weight_matrices.dir/run_get_weight_matrices.cpp.s
 .PHONY : run_get_weight_matrices.cpp.s
 
+run_live_demo.o: run_live_demo.cpp.o
+
+.PHONY : run_live_demo.o
+
+# target to build an object file
+run_live_demo.cpp.o:
+	cd /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/build && $(MAKE) -f src/CMakeFiles/run_live_demo.dir/build.make src/CMakeFiles/run_live_demo.dir/run_live_demo.cpp.o
+.PHONY : run_live_demo.cpp.o
+
+run_live_demo.i: run_live_demo.cpp.i
+
+.PHONY : run_live_demo.i
+
+# target to preprocess a source file
+run_live_demo.cpp.i:
+	cd /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/build && $(MAKE) -f src/CMakeFiles/run_live_demo.dir/build.make src/CMakeFiles/run_live_demo.dir/run_live_demo.cpp.i
+.PHONY : run_live_demo.cpp.i
+
+run_live_demo.s: run_live_demo.cpp.s
+
+.PHONY : run_live_demo.s
+
+# target to generate assembly for a file
+run_live_demo.cpp.s:
+	cd /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/build && $(MAKE) -f src/CMakeFiles/run_live_demo.dir/build.make src/CMakeFiles/run_live_demo.dir/run_live_demo.cpp.s
+.PHONY : run_live_demo.cpp.s
+
 test_cameras.o: test_cameras.cpp.o
 
 .PHONY : test_cameras.o
@@ -331,8 +373,9 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... install/strip"
-	@echo "... install/local"
 	@echo "... edit_cache"
+	@echo "... install/local"
+	@echo "... run_live_demo"
 	@echo "... test_cameras"
 	@echo "... run_calibrate_camera"
 	@echo "... install"
@@ -349,6 +392,9 @@ help:
 	@echo "... run_get_weight_matrices.o"
 	@echo "... run_get_weight_matrices.i"
 	@echo "... run_get_weight_matrices.s"
+	@echo "... run_live_demo.o"
+	@echo "... run_live_demo.i"
+	@echo "... run_live_demo.s"
 	@echo "... test_cameras.o"
 	@echo "... test_cameras.i"
 	@echo "... test_cameras.s"

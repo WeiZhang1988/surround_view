@@ -98,6 +98,9 @@ class CameraModel {
   void set_project_matrix(cv::Mat _project_matrix) {
     project_matrix_ = _project_matrix.clone();
   }
+  std::string get_camera_name() {
+    return camera_name_;
+  }
   protected:
   std::string camera_param_file_, camera_name_;
   cv::Mat scale_xy_, shift_xy_, undistort_map_x_, undistort_map_y_, project_matrix_, camera_matrix_, dist_coeffs_;
