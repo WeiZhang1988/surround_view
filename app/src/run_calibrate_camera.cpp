@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include <memory>
+#include <assert.h> 
 #include <sys/stat.h>
 #include <opencv2/opencv.hpp>
 #include "capture_thread.hpp"
@@ -15,12 +16,18 @@ std::string default_param_file = target_dir + "/camera_params.yaml";
 
 int main(int argc, char *argv[]) {
   int camera_device_id{0};
+  // size of the calibrate chessboard pattern
   cv::Size chess_size{9,6};
+  // resolution of the camera image
   cv::Size resolution{640,480};
+  // use every nth frame in the video
   int frame_step{20};
   std::string output_param_file{default_param_file};
+  // whether camera is fisheye
   bool is_fisheye {true};
+  // flip method of camera
   FlipMethod flip_method{FlipMethod::Identity};
+  // whether to use gstreamer for the camera capture
   bool no_gst{true};
   struct stat sb;
   if (stat(target_dir.c_str(), &sb) != 0) {
@@ -34,21 +41,15 @@ int main(int argc, char *argv[]) {
   double fontscale = 0.6;
   int W{resolution.width};
   int H{resolution.height};
-  cv::Mat chess_points = cv::Mat::zeros(1,chess_size.width*chess_size.height,CV_64FC3);
-  cv::Mat indices_0 = cv::Mat::zeros(chess_size.width,1,CV_16UC1);
-  for (int i=0;i<chess_size.width;i++) {
-    indices_0.at<unsigned short>(i,0) = i;
-  }
-  cv::Mat indices_1 = cv::Mat::zeros(1,chess_size.height,CV_16UC1);
-  for (int i=0;i<chess_size.height;i++) {
-    indices_1.at<unsigned short>(0,i) = i;
-  }
-  cv::Mat indices_merged;
-  cv::merge(std::vector<cv::Mat>{cv::repeat(indices_0, 1, chess_size.height),cv::repeat(indices_1, chess_size.width, 1)},indices_merged);
-  cv::Mat indices_transposed;
-  cv::transpose(indices_merged,indices_transposed);
-  cv::Mat indices_reshaped = indices_transposed.reshape(2,chess_size.width*chess_size.height);
-  std::vector<cv::Mat>   objpoints;
+  std::vector<cv::Point3d> objp;
+  for(int i = 0; i<H; i++){
+      for(int j = 0; j<W; j++){
+        objp.push_back(cv::Point3f(j,i,0));
+      }
+    }
+  // 3d points in real world
+  std::vector<std::vector<cv::Point3d>> objpoints;
+  // 2d points in image plane
   std::vector<std::vector<cv::Point2d>> imgpoints;
   std::shared_ptr<CaptureThread> sptr_capture_thread = std::make_shared<CaptureThread>(camera_device_id, flip_method, true, cv::CAP_GSTREAMER, resolution, !no_gst);
   std::shared_ptr<MultiBufferManager<ImageFrame,CaptureThread>> sptr_multi_buffer_manager = std::make_shared<MultiBufferManager<ImageFrame,CaptureThread>>();
@@ -75,13 +76,14 @@ int main(int argc, char *argv[]) {
         cv::cornerSubPix(gray, corners, cv::Size(5, 5), cv::Size(-1, -1), cv::TermCriteria(cv::TermCriteria::Type::EPS + cv::TermCriteria::Type::COUNT, 30, 0.01));
         std::cout<<"OK."<<std::endl;
         imgpoints.push_back(corners);
-        objpoints.push_back(indices_reshaped);
+        objpoints.push_back(objp);
         cv::drawChessboardCorners(img, chess_size, corners, found);
       }
       cv::putText(img, text1, cv::Point(20, 70),  font, fontscale,  cv::Scalar(255, 200, 0), 2);
       cv::putText(img, text2, cv::Point(20, 110), font, fontscale,  cv::Scalar(255, 200, 0), 2);
       cv::putText(img, text3, cv::Point(20, 30),  font, fontscale,  cv::Scalar(255, 200, 0), 2);
       cv::imshow("corners", img);
+      // & 0xFF is to only get lower 8 bits of waiKey results.
       int key = (cv::waitKey(1) & 0xFF);
       if (key == int('c')) {
         std::cout<<"Performing calibration..."<<std::endl;

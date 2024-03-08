@@ -124,6 +124,7 @@ set(CMAKE_MAKEFILE_PRODUCTS
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
+  "src/CMakeFiles/template_calibrate_camera.dir/DependInfo.cmake"
   "src/CMakeFiles/run_live_demo.dir/DependInfo.cmake"
   "src/CMakeFiles/test_cameras.dir/DependInfo.cmake"
   "src/CMakeFiles/run_calibrate_camera.dir/DependInfo.cmake"

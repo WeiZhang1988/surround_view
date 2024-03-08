@@ -14,4 +14,5 @@ cd ../exe
 #./run_get_weight_matrices
 #./run_get_projection_maps front
 #./run_calibrate_camera
-./test_cameras
+#./test_cameras
+./template_calibrate_camera

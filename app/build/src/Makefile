@@ -157,6 +157,21 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
+src/CMakeFiles/template_calibrate_camera.dir/rule:
+	cd /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/build && $(MAKE) -f CMakeFiles/Makefile2 src/CMakeFiles/template_calibrate_camera.dir/rule
+.PHONY : src/CMakeFiles/template_calibrate_camera.dir/rule
+
+# Convenience name for target.
+template_calibrate_camera: src/CMakeFiles/template_calibrate_camera.dir/rule
+
+.PHONY : template_calibrate_camera
+
+# fast build rule for target.
+template_calibrate_camera/fast:
+	cd /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/build && $(MAKE) -f src/CMakeFiles/template_calibrate_camera.dir/build.make src/CMakeFiles/template_calibrate_camera.dir/build
+.PHONY : template_calibrate_camera/fast
+
+# Convenience name for target.
 src/CMakeFiles/run_live_demo.dir/rule:
 	cd /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/build && $(MAKE) -f CMakeFiles/Makefile2 src/CMakeFiles/run_live_demo.dir/rule
 .PHONY : src/CMakeFiles/run_live_demo.dir/rule
@@ -339,6 +354,33 @@ run_live_demo.cpp.s:
 	cd /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/build && $(MAKE) -f src/CMakeFiles/run_live_demo.dir/build.make src/CMakeFiles/run_live_demo.dir/run_live_demo.cpp.s
 .PHONY : run_live_demo.cpp.s
 
+template_calibrate_camera.o: template_calibrate_camera.cpp.o
+
+.PHONY : template_calibrate_camera.o
+
+# target to build an object file
+template_calibrate_camera.cpp.o:
+	cd /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/build && $(MAKE) -f src/CMakeFiles/template_calibrate_camera.dir/build.make src/CMakeFiles/template_calibrate_camera.dir/template_calibrate_camera.cpp.o
+.PHONY : template_calibrate_camera.cpp.o
+
+template_calibrate_camera.i: template_calibrate_camera.cpp.i
+
+.PHONY : template_calibrate_camera.i
+
+# target to preprocess a source file
+template_calibrate_camera.cpp.i:
+	cd /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/build && $(MAKE) -f src/CMakeFiles/template_calibrate_camera.dir/build.make src/CMakeFiles/template_calibrate_camera.dir/template_calibrate_camera.cpp.i
+.PHONY : template_calibrate_camera.cpp.i
+
+template_calibrate_camera.s: template_calibrate_camera.cpp.s
+
+.PHONY : template_calibrate_camera.s
+
+# target to generate assembly for a file
+template_calibrate_camera.cpp.s:
+	cd /home/ubuntu/Documents/WZ_dev/PERCEPTION/AVP_SLAM/SVS/app/build && $(MAKE) -f src/CMakeFiles/template_calibrate_camera.dir/build.make src/CMakeFiles/template_calibrate_camera.dir/template_calibrate_camera.cpp.s
+.PHONY : template_calibrate_camera.cpp.s
+
 test_cameras.o: test_cameras.cpp.o
 
 .PHONY : test_cameras.o
@@ -374,6 +416,7 @@ help:
 	@echo "... depend"
 	@echo "... install/strip"
 	@echo "... edit_cache"
+	@echo "... template_calibrate_camera"
 	@echo "... install/local"
 	@echo "... run_live_demo"
 	@echo "... test_cameras"
@@ -395,6 +438,9 @@ help:
 	@echo "... run_live_demo.o"
 	@echo "... run_live_demo.i"
 	@echo "... run_live_demo.s"
+	@echo "... template_calibrate_camera.o"
+	@echo "... template_calibrate_camera.i"
+	@echo "... template_calibrate_camera.s"
 	@echo "... test_cameras.o"
 	@echo "... test_cameras.i"
 	@echo "... test_cameras.s"

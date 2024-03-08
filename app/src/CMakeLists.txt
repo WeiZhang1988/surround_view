@@ -48,3 +48,12 @@ target_include_directories(run_live_demo PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
 																			 										${OpenCV_INCLUDE_DIRS}
 																													${PROJECT_SOURCE_DIR}/../include)
 install(TARGETS run_live_demo DESTINATION ${PROJECT_SOURCE_DIR}/exe)
+
+##############################################################################################
+add_executable(template_calibrate_camera template_calibrate_camera.cpp)
+target_link_libraries(template_calibrate_camera PUBLIC pthread
+																										 ${OpenCV_LIBRARIES})
+target_include_directories(template_calibrate_camera PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
+																			 										${OpenCV_INCLUDE_DIRS}
+																													${PROJECT_SOURCE_DIR}/../include)
+install(TARGETS template_calibrate_camera DESTINATION ${PROJECT_SOURCE_DIR}/exe)

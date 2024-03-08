@@ -157,6 +157,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named template_calibrate_camera
+
+# Build rule for target.
+template_calibrate_camera: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 template_calibrate_camera
+.PHONY : template_calibrate_camera
+
+# fast build rule for target.
+template_calibrate_camera/fast:
+	$(MAKE) -f src/CMakeFiles/template_calibrate_camera.dir/build.make src/CMakeFiles/template_calibrate_camera.dir/build
+.PHONY : template_calibrate_camera/fast
+
+#=============================================================================
 # Target rules for targets named run_live_demo
 
 # Build rule for target.
@@ -233,6 +246,7 @@ help:
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
+	@echo "... template_calibrate_camera"
 	@echo "... run_live_demo"
 	@echo "... test_cameras"
 	@echo "... run_calibrate_camera"
