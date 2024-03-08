@@ -44,19 +44,22 @@ int main(int argc, char **argv) {
   // intrinsic camera matrix
   cv::Matx33d K(cv::Matx33d::eye()); 
   // distortion coefficients 
-  cv::Vec<double, 5> k(0, 0, 0, 0, 0); 
+  cv::Vec<double, 5> d(0, 0, 0, 0, 0); 
   std::vector<cv::Mat> rvecs, tvecs;
   std::vector<double> stdIntrinsics, stdExtrinsics, perViewErrors;
   int flags = cv::CALIB_FIX_ASPECT_RATIO + cv::CALIB_FIX_K3 + cv::CALIB_ZERO_TANGENT_DIST + cv::CALIB_FIX_PRINCIPAL_POINT;
-  cv::Size frameSize(1440, 1080);
+  cv::Size imageSize(1440, 1080);
   std::cout << "Calibrating..." << std::endl;
-  float error = cv::calibrateCamera(objpoints, imgpoints, frameSize, K, k, rvecs, tvecs, flags);
+  float error = cv::calibrateCamera(objpoints, imgpoints, imageSize, K, d, rvecs, tvecs, flags);
   std::cout << "Reprojection error = " << error << std::endl;
   std::cout << "intrinsic camera matrix = " << K << std::endl;
-  std::cout << "distortion coefficients = " << k << std::endl;
+  std::cout << "distortion coefficients = " << d << std::endl;
   // 3, precompute lens correction interpolation
+  // alpha trims images
+  const double alpha = 0.;
+  cv::Mat New_K = getOptimalNewCameraMatrix(K, d, imageSize, alpha, imageSize, 0);
   cv::Mat mapX, mapY;
-  cv::initUndistortRectifyMap(K, k, cv::Matx33d::eye(), K, frameSize, CV_32FC1,mapX, mapY);
+  cv::initUndistortRectifyMap(K, d, cv::Matx33d::eye(), New_K, imageSize, CV_32FC1,mapX, mapY);
   // 4, how lens corrected images
   for (auto const &f : fileNames) {
     std::cout << std::string(f) << std::endl;
