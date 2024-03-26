@@ -38,8 +38,8 @@ bool get_projection_map(std::shared_ptr<CameraModel> _sptr_camera, cv::Mat _imag
 }
 
 int main(int argc, char *argv[]) {
-  if (argc != 2) {
-    throw std::runtime_error("usage: ./run_get_projection_maps [camera name, one in [front, back, left, right]]");
+  if (argc != 6) {
+    throw std::runtime_error("usage: ./run_get_projection_maps [camera name, one in [front, back, left, right]] [scale_x] [scale_y] [shift_x] [shift_y]");
     return -1;
   }
   std::string camera_name = argv[1];
@@ -47,11 +47,15 @@ int main(int argc, char *argv[]) {
     throw std::runtime_error("wrong camera name");
     return -1;
   } 
+  double scale_x = std::stod(argv[2]);
+  double scale_y = std::stod(argv[3]);
+  double shift_x = std::stod(argv[4]);
+  double shift_y = std::stod(argv[5]);
   std::string camera_file = std::string("./data/yamls/") + camera_name + std::string(".yaml");
   std::string image_file = std::string("./data/images/") + camera_name + std::string(".png");
   cv::Mat image = cv::imread(image_file,cv::IMREAD_UNCHANGED);
   std::shared_ptr<CameraModel> sptr_camera = std::make_shared<CameraModel>(camera_file, camera_name);
-  sptr_camera->set_scale_and_shift(static_settings.scale.clone(), static_settings.shift.clone());
+  sptr_camera->set_scale_and_shift(cv::Mat{scale_x,scale_y}, cv::Mat{shift_x,shift_y});
   if (get_projection_map(sptr_camera,image.clone())) {
     std::cout<<"saving projection matrix to yaml"<<std::endl;
     sptr_camera->save_data();

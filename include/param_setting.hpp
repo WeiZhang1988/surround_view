@@ -12,8 +12,6 @@ class Settings{
   Settings() {
     cv::resize(car_image, car_image, cv::Size(xr - xl, yb - yt), 0, 0, cv::INTER_LINEAR);
   }
-  cv::Mat scale{1.0,1.0};
-  cv::Mat shift{0.0,0.0};
   std::vector<std::string> camera_names{"front", "back", "left", "right"};
   int shift_w{300};
   int shift_h{300};

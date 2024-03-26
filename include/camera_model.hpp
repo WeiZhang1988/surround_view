@@ -1,5 +1,5 @@
-#ifndef SVS_FISHEYE_CAMERA_HPP
-#define SVS_FISHEYE_CAMERA_HPP
+#ifndef SVS_CAMERA_MODEL_HPP
+#define SVS_CAMERA_MODEL_HPP
 
 #include <unistd.h>
 #include <string>
@@ -11,7 +11,7 @@
 namespace SVS {
 class CameraModel {
   public:
-  CameraModel(std::string _camera_param_file, std::string _camera_name) {
+  CameraModel(std::string _camera_param_file, std::string _camera_name, bool _is_fisheye = true) {
     if ( access( _camera_param_file.c_str(), F_OK ) == -1 ) {
       throw std::runtime_error("Cannot find camera param file");
     }
@@ -20,6 +20,7 @@ class CameraModel {
     }
     camera_param_file_ = _camera_param_file;
     camera_name_ = _camera_name;
+    is_fisheye_ = _is_fisheye;
     scale_xy_ = cv::Mat{1.0,1.0};
     shift_xy_ = cv::Mat{0,0};
     project_shape_ = static_settings.project_shapes[camera_name_];
@@ -41,13 +42,18 @@ class CameraModel {
     fs.release();
     update_distort_maps();
   }
- void update_distort_maps(){
+  void update_distort_maps(){
     cv::Mat new_camera_matrix = camera_matrix_.clone();
     new_camera_matrix.at<double>(0,0) *= scale_xy_.at<double>(0);
     new_camera_matrix.at<double>(1,1) *= scale_xy_.at<double>(1);
     new_camera_matrix.at<double>(0,2) += shift_xy_.at<double>(0);
     new_camera_matrix.at<double>(1,2) += shift_xy_.at<double>(1);
-    cv::fisheye::initUndistortRectifyMap(camera_matrix_, dist_coeffs_, cv::Mat::eye(3,3,CV_64F),new_camera_matrix, resolution_, CV_16SC2, undistort_map_x_, undistort_map_y_);
+    // cv::Mat new_camera_matrix = cv::getOptimalNewCameraMatrix(camera_matrix_.clone(), dist_coeffs_, resolution_, 1.0, resolution_);
+    if (is_fisheye_){
+      cv::fisheye::initUndistortRectifyMap(camera_matrix_, dist_coeffs_, cv::Mat::eye(3,3,CV_64F),new_camera_matrix, resolution_, CV_16SC2, undistort_map_x_, undistort_map_y_);
+    } else {
+      cv::initUndistortRectifyMap(camera_matrix_, dist_coeffs_, cv::Mat::eye(3,3,CV_64F),new_camera_matrix, resolution_, CV_16SC2, undistort_map_x_, undistort_map_y_);
+    }
   }
   void set_scale_and_shift(cv::Mat _scale_xy = cv::Mat{1.0,1.0}, cv::Mat _shift_xy = cv::Mat{0.0,0.0}) {
     scale_xy_ = _scale_xy;
@@ -102,11 +108,11 @@ class CameraModel {
     return camera_name_;
   }
   protected:
+  bool is_fisheye_ = false;
   std::string camera_param_file_, camera_name_;
   cv::Mat scale_xy_, shift_xy_, undistort_map_x_, undistort_map_y_, project_matrix_, camera_matrix_, dist_coeffs_;
   cv::Size project_shape_, resolution_;
 };
-
 } //namespace SVS
 
-#endif //SVS_FISHEYE_CAMERA_HPP
+#endif //SVS_CAMERA_MODEL_HPP
